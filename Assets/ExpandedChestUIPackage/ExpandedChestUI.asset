@@ -29,7 +29,7 @@ MonoBehaviour:
     - path: Bundles/ExpandedChestUI_Windows.assetbundle
     - path: Bundles/ExpandedChestUI_Linux.assetbundle
     dependencies: []
-  modPath: Assets\ExpandedChestUI
+  modPath: Assets\ExpandedChestUIPackage\ExpandedChestUI
   forceReimport: 1
   buildBundles: 1
   cacheBundles: 0
