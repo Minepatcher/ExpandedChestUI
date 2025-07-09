@@ -24,12 +24,12 @@ MonoBehaviour:
     otherTags: Visual;Overhaul
     gameVersionTags: 1.1.2
   buildAll: 1
-  uploadToModIO: 1
+  uploadToModIO: 0
   updateDescription: 0
   uploadVersion: 
   allGameVersions: 1.1.2
   changeLog: 
-  actionPrefix: Fetching
+  actionPrefix: Building
   buildIndex: -1
   isBuilding: 0
   oldBuildAll: 1
