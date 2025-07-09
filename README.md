@@ -1,5 +1,5 @@
 # ExpandedChestUI
-This mod replaces the default Core Keeper Chest UI for a more expansive UI that allows for scrolling. **THIS MOD DOES NOTHING ON IT'S OWN**, but is rather to help Modders more easily create larger chests.
+This mod replaces the default Core Keeper Chest UI for a more expansive UI that allows for scrolling. **THIS MOD DOES NOTHING ON IT'S OWN**, but is rather to help Modders more easily create larger chests. Up to 15x9 Inventory Size.
 
 # Usage
 For those that wish to use this mod to create thier own chests. Simply add the following code to your dependencies in your manifest.json file.
