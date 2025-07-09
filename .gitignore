@@ -104,5 +104,6 @@ InitTestScene*.unity*
 !/[Aa]ssets/ExpandedChestUI
 !/[Aa]ssets/ExpandedChestUI.meta
 !/[Aa]ssets/package.json*
+!/[Aa]ssets/*.asset
 /[Pp]ackages*
 /[Pp]rojectSettings*
