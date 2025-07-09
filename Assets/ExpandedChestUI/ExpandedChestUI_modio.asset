@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: ExpandedChestUI_modio
   m_EditorClassIdentifier: 
   modId: 0
-  modSettings: {fileID: 11400000, guid: c47db2cd4428c284c8ee2c65c4c0851f, type: 2}
+  modSettings: {fileID: 11400000, guid: f858c37d04f49884084ae3563e1201ae, type: 2}
   logo: {fileID: 0}
   summary: 

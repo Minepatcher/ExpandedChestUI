@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: ExpandedChestUI
   m_EditorClassIdentifier: 
   metadata:
-    guid: a0c2592eed514338ae80032dd43b00a7
+    guid: f8a04e7b4ea8494da9420f449009c107
     name: ExpandedChestUI
     skipSafetyChecks: 0
     disableScripts: 0
