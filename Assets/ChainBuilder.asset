@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a3ba067f3b28424ab1f656f569e063bd, type: 3}
+  m_Name: ChainBuilder
+  m_EditorClassIdentifier: 
+  mods:
+  - name: ExpandedChestUI
+    mod: {fileID: 11400000, guid: 5904a8089164bfd4a95892dd11ea3467, type: 2}
+    shouldBuild: 1
+    version: 0.0.1
+    originalTags: []
+    otherTags: Visual
+    gameVersionTags: 1.1.2
+  buildAll: 1
+  uploadToModIO: 0
+  updateDescription: 0
+  uploadVersion: 
+  allGameVersions: 1.1.2
+  changeLog: 
+  actionPrefix: Fetching
+  buildIndex: -1
+  isBuilding: 0
+  oldBuildAll: 1
