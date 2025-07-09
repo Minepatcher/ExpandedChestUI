@@ -17,15 +17,18 @@ MonoBehaviour:
     mod: {fileID: 11400000, guid: 5904a8089164bfd4a95892dd11ea3467, type: 2}
     shouldBuild: 1
     version: 0.0.1
-    originalTags: []
-    otherTags: Visual
+    originalTags:
+    - 1.1.2
+    - Visual
+    - Overhaul
+    otherTags: Visual;Overhaul
     gameVersionTags: 1.1.2
   buildAll: 1
-  uploadToModIO: 0
+  uploadToModIO: 1
   updateDescription: 0
   uploadVersion: 
   allGameVersions: 1.1.2
-  changeLog: 
+  changeLog: test Chain Builder
   actionPrefix: Fetching
   buildIndex: -1
   isBuilding: 0

@@ -101,8 +101,7 @@ InitTestScene*.unity*
 
 # Custom
 /[Aa]ssets/*
-!/[Aa]ssets/ExpandedChestUI
-!/[Aa]ssets/ExpandedChestUI.meta
+!/[Aa]ssets/ExpandedChestUIPackage*
 !/[Aa]ssets/package.json*
 !/[Aa]ssets/*.asset
 /[Pp]ackages*
