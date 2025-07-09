@@ -83,15 +83,11 @@ InitTestScene*.unity*
 
 # Addressables default ignores, before user customizations
 /ServerData
-/[Aa]ssets/StreamingAssets/aa*
+/[Aa]ssets/[Ss]treamingAssets/aa*
 /[Aa]ssets/AddressableAssetsData/link.xml*
 /[Aa]ssets/Addressables_Temp*
 # Packed Addressables
 /[Aa]ssets/[Aa]ddressable[Aa]ssets[Dd]ata/*/*.bin*
-
-# Temporary auto-generated Android Assets
-/[Aa]ssets/[Ss]treamingAssets/aa.meta
-/[Aa]ssets/[Ss]treamingAssets/aa/*
 
 # Vim
 *.swp
@@ -100,9 +96,10 @@ InitTestScene*.unity*
 .idea/
 
 # Custom
-/[Aa]ssets/*
-!/[Aa]ssets/ExpandedChestUIPackage*
-!/[Aa]ssets/package.json*
-!/[Aa]ssets/*.asset
+/[Aa]ssets/Graphics*
+/[Aa]ssets/ModSDK*
+/[Aa]ssets/Plugins*
+/[Aa]ssets/Unity*
+/[Aa]ssets/Resources*
 /[Pp]ackages*
 /[Pp]rojectSettings*
