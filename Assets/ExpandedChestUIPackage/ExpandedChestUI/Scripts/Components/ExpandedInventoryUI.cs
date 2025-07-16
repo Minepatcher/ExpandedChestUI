@@ -86,39 +86,29 @@ namespace ExpandedChestUI.Scripts.Components
             float height = visibleRows * spread;
             UpdateExtendedInventoryBackground(height);
             if (inventoryHandler.entityMonoBehaviour is null) return;
-            switch (inventoryHandler.entityMonoBehaviour)
+            ButtonUIElement[] buttonUIElements = gameObject.GetComponentsInChildren<ButtonUIElement>(true);
+            int buttonYGridCount = Mathf.Min(buttonUIElements.Length - 1, 3);
+            bool hasScroll = height > scrollWindow.windowHeight;
+            for (int index = 0; index < buttonUIElements.Length; index++)
             {
-                case Chest { showSortAndQuickStackButtons: true }:
-                    bool hasScroll = height > scrollWindow.windowHeight;
-                    if (hasScroll)
-                    {
-                        scrollWindow.scrollBar.transform.localPosition = new Vector3(
-                            -sideStartPosition + 0.85f,
-                            scrollWindow.scrollBar.transform.localPosition.y,
-                            scrollWindow.scrollBar.transform.localPosition.z);
-                    }
-                    
-                    if (optionalQuickStackButton is not null)
-                    {
-                        optionalQuickStackButton.transform.localPosition = new Vector3(
-                            -sideStartPosition + (hasScroll ? 1.8f : spread),
-                            optionalQuickStackButton.transform.localPosition.y,
-                            optionalQuickStackButton.transform.localPosition.z);
-                        optionalQuickStackButton.gameObject.SetActive(true);
-                    }
-
-                    if (optionalSortButton is not null)
-                    {
-                        optionalSortButton.transform.localPosition = new Vector3(
-                            -sideStartPosition + (hasScroll ? 1.8f : spread),
-                            optionalSortButton.transform.localPosition.y, optionalSortButton.transform.localPosition.z);
-                        optionalSortButton.gameObject.SetActive(true);
-                    }
-                    break;
-                default:
-                    optionalQuickStackButton?.gameObject.SetActive(false);
-                    optionalSortButton?.gameObject.SetActive(false);
-                    break;
+                ButtonUIElement buttonUIElement = buttonUIElements[index];
+                if (buttonUIElement.name == "Handle")
+                {
+                    buttonUIElement.transform.parent.parent.localPosition = new Vector3(
+                        -sideStartPosition + 0.85f,
+                        scrollWindow.scrollBar.transform.localPosition.y,
+                        scrollWindow.scrollBar.transform.localPosition.z);
+                } else if (inventoryHandler.entityMonoBehaviour is Chest { showSortAndQuickStackButtons: true })
+                {
+                    buttonUIElement.transform.localPosition = new Vector3(
+                        -sideStartPosition + (hasScroll ? 1.8f : spread) + (Mathf.FloorToInt((index - 1) / 3f) * spread),
+                        -GetSideStartPosition(buttonYGridCount) - (((index - 1) % buttonYGridCount) * spread),
+                        buttonUIElement.transform.localPosition.z);
+                    buttonUIElement.gameObject.SetActive(true);
+                } else
+                {
+                    buttonUIElement.gameObject.SetActive(false);
+                }
             }
         }
 

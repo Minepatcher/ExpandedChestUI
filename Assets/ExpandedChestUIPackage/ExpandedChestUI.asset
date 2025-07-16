@@ -32,7 +32,7 @@ MonoBehaviour:
   modPath: Assets\ExpandedChestUIPackage\ExpandedChestUI
   forceReimport: 1
   buildBundles: 1
-  cacheBundles: 0
+  cacheBundles: 1
   buildLinux: 1
   assets:
   - path: Assets/ExpandedChestUIPackage/ExpandedChestUI/GameObjects/ExpandedChestSlot.prefab
