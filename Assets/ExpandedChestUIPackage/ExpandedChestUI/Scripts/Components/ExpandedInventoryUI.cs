@@ -1,6 +1,9 @@
+#define PUG_ACHIEVEMENTS
+
 using System.Collections.Generic;
 using UnityEngine;
 
+// ReSharper disable once CheckNamespace
 namespace ExpandedChestUI.Scripts.Components
 {
     public class ExpandedInventoryUI : InventoryUI, IScrollable
@@ -31,8 +34,11 @@ namespace ExpandedChestUI.Scripts.Components
             UpdateContainerSize();
             itemSlotsRoot.gameObject.SetActive(true);
             if (scrollWindow is not null)
+            {
                 scrollWindow.enabled = true;
-            foreach (SlotUIBase itemSlot in itemSlots)
+                scrollWindow.ResetScroll();
+            }
+            foreach (var itemSlot in itemSlots)
             {
                 if (itemSlot.gameObject.activeInHierarchy)
                     itemSlot.UpdateSlot();
@@ -61,6 +67,7 @@ namespace ExpandedChestUI.Scripts.Components
             if (inventoryHandler == null) return;
             int size = inventoryHandler.size;
             if (_previousInventorySize == size) return;
+            ExpandedChestUI.Log.LogInfo($"UpdateContainerSize: {size} - {_previousInventorySize}");
             _previousInventorySize = size;
             visibleRows = Mathf.CeilToInt((float)inventoryHandler.size / inventoryHandler.columns);
             visibleColumns = inventoryHandler.columns;
@@ -139,9 +146,9 @@ namespace ExpandedChestUI.Scripts.Components
 
         private void MarkSlotsAsDirty()
         {
-            foreach (SlotUIBase itemSlot in itemSlots)
+            foreach (var itemSlot in itemSlots)
             {
-                if (itemSlot.isShowing) ((InventorySlotUI)itemSlot).dirty = true;
+                if (itemSlot.isShowing) ((ExpandedInventorySlotUI)itemSlot).dirty = true;
             }
         }
 
@@ -154,29 +161,29 @@ namespace ExpandedChestUI.Scripts.Components
                 _ => objectID
             };
         }
-
+        
         private void TriggerInventoryAchievements()
         {
-            if (containerType != ItemSlotsUIContainerType.ChestInventory || Manager.achievements.HasTriggeredAchievement(AchievementID.PetColors))
+            if (containerType != ItemSlotsUIContainerType.ChestInventory 
+                || Manager.achievements.HasTriggeredAchievement(AchievementID.PetColors))
                 return;
-            Dictionary<ObjectID, HashSet<int>> dictionary = new Dictionary<ObjectID, HashSet<int>>();
-            foreach (SlotUIBase itemSlot in itemSlots)
+            var dictionary = new Dictionary<ObjectID, HashSet<int>>();
+            foreach (var itemSlot in itemSlots)
             {
                 if (!itemSlot.isShowing) continue;
-                ContainedObjectsBuffer containedObject = itemSlot.GetContainedObject();
-                ObjectID objectId = containedObject.objectID;
+                var containedObject = itemSlot.GetContainedObject();
+                var objectId = containedObject.objectID;
                 if (!InventoryHandler.TryGetExtraInventoryData(containedObject.auxDataIndex, out PetSkinCD data))
                     continue;
-                ObjectID objectIdCategory = GetPetObjectIDCategory(objectId);
+                var objectIdCategory = GetPetObjectIDCategory(objectId);
                 if (!dictionary.ContainsKey(objectIdCategory))
                     dictionary.Add(objectIdCategory, new HashSet<int>());
                 dictionary[objectIdCategory].Add(objectIdCategory == ObjectID.PetSlimeBlob ? (int) objectId : data.skinIndex);
             }
-            foreach ((ObjectID key, HashSet<int> intSet) in dictionary)
+            foreach (var (key, intSet) in dictionary)
             {
-                PetInfosTable.PetSkinInfo petSkinInfo = Manager.ui.petInfosTable.GetPetSkinInfo(key);
-                if (petSkinInfo == null ||
-                    intSet.Count < (key == ObjectID.PetSlimeBlob ? 5 : petSkinInfo.skins.Count)) continue;
+                var petSkinInfo = Manager.ui.petInfosTable.GetPetSkinInfo(key);
+                if (petSkinInfo == null || intSet.Count < (key == ObjectID.PetSlimeBlob ? 5 : petSkinInfo.skins.Count)) continue;
                 Manager.achievements.TriggerAchievement(AchievementID.PetColors);
                 break;
             }

@@ -7,6 +7,8 @@ using PugMod;
 /*  Taken from Minitte's Inventory Size Patch
     https://mod.io/g/corekeeper/m/inventory-size-patch#description
  */
+
+// ReSharper disable once CheckNamespace
 namespace ExpandedChestUI.Scripts.Patches
 {
     [HarmonyPatch]

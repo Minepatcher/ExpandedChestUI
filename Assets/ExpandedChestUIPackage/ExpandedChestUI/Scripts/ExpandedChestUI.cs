@@ -2,6 +2,7 @@ using System.Linq;
 using PugMod;
 using UnityEngine;
 
+// ReSharper disable once CheckNamespace
 namespace ExpandedChestUI.Scripts
 {
     public class ExpandedChestUI : IMod
@@ -15,7 +16,7 @@ namespace ExpandedChestUI.Scripts
         public void EarlyInit()
         {
             Log.LogInfo($"{FriendlyName} version: {Version}");
-            LoadedMod modInfo = API.ModLoader.LoadedMods.FirstOrDefault(modInfo => modInfo.Handlers.Contains(this));
+            var modInfo = API.ModLoader.LoadedMods.FirstOrDefault(modInfo => modInfo.Handlers.Contains(this));
             if (modInfo != null) return;
             Log.LogError($"Failed to load {FriendlyName}: metadata not found!");
         }
@@ -35,7 +36,7 @@ namespace ExpandedChestUI.Scripts
             {
                 case GameObject gameObject:
                 {
-                    if (gameObject.name == "ExpandedChestUI")
+                    if(gameObject.name == "ExpandedChestUI")
                         ChestUIObject = gameObject;
                     break;
                 }

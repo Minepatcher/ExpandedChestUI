@@ -35,8 +35,62 @@ MonoBehaviour:
   cacheBundles: 1
   buildLinux: 1
   assets:
+  - path: Assets/ExpandedChestUIPackage/ExpandedChestUI/AnimatorController/error.anim
+    hash: 7E25A551856702112D0D575B96AAA0A7E4A2155A13C13FAA16BAF79FE186F280
+  - path: Assets/ExpandedChestUIPackage/ExpandedChestUI/AnimatorController/idle_1.anim
+    hash: 278BC95DC6378AE5B982428CB679017A853B2C9CB1E872B7F87F8CD2249598BC
+  - path: Assets/ExpandedChestUIPackage/ExpandedChestUI/AnimatorController/ItemSlot.controller
+    hash: C9F6A8C1DD661D0B5F2639DB65854F7E01633CCD1509059AC23FB04FF5E03032
+  - path: Assets/ExpandedChestUIPackage/ExpandedChestUI/AnimatorController/nonError.anim
+    hash: 514751B54185464B3EF1DFB373898A67CD6411AA44B5C288702176FDDACC37DB
+  - path: Assets/ExpandedChestUIPackage/ExpandedChestUI/AnimatorController/scaleUp.anim
+    hash: E49C6AE2A38EAD02B9957D2A504F081164205B5D8B22EE91C6A74289F1DF28DF
+  - path: Assets/ExpandedChestUIPackage/ExpandedChestUI/AnimatorController/slotTypeHighlightEffect.anim
+    hash: 5D63215C44246F885CD1174DACDD4145E8ED7C72166829925EF97D7519F6545B
+  - path: Assets/ExpandedChestUIPackage/ExpandedChestUI/AnimatorController/SlotTypeHighlightEffect.controller
+    hash: 360BDC2CD639CA587CCF046AE8A8F8465BD6820976F5DFB347B57136F5B15B5C
   - path: Assets/ExpandedChestUIPackage/ExpandedChestUI/GameObjects/ExpandedChestSlot.prefab
-    hash: 2585C6E2514EC88FBF16D65005BD27094B2BCC53D357A6977F0FAEC629EB452F
+    hash: 72D39084E155830F5925B9FAF8A80B2C9AD0D0457F61B5AF547124DAE702EB15
   - path: Assets/ExpandedChestUIPackage/ExpandedChestUI/GameObjects/ExpandedChestUI.prefab
-    hash: D1869B8D3E3DC7407607EFC6610BD6DFB08BF4EB4C72F79F81F6CE0B9685CCC2
+    hash: 7FA4BB80EDD3FF1116F0E4246A9BA928178026F442DB53AB694EC7ABB0AD7538
+  - path: Assets/ExpandedChestUIPackage/ExpandedChestUI/Textures/16x16white.png
+    hash: 9C2FCFBB97B34614052BE075A8BD4D1E626412DC87DB62356AA8E7BD7887EF4A
+  - path: Assets/ExpandedChestUIPackage/ExpandedChestUI/Textures/active_border.png
+    hash: 13010BE7C3DFCB979007536AA0EC0B1F6368E35A7E2C19EA08DD9DDF16AA760C
+  - path: Assets/ExpandedChestUIPackage/ExpandedChestUI/Textures/background_border.png
+    hash: 8D6ECF30E0E5881FEA41CFAA2703AA4A09808549B29EE24FCDCDE7CB5F29D7EC
+  - path: Assets/ExpandedChestUIPackage/ExpandedChestUI/Textures/cage_overlay.png
+    hash: 21F7AD8FAA33F9EC139019CFB2683EE6CC56A6FF502AC37471A1DB4A9CF9824F
+  - path: Assets/ExpandedChestUIPackage/ExpandedChestUI/Textures/cage_underlay.png
+    hash: E096A4639784636DD5F699EC4A4F4EF6DA43900E8590E02E803C1A5A8A969535
+  - path: Assets/ExpandedChestUIPackage/ExpandedChestUI/Textures/favorite_border.png
+    hash: 000E25F0DBCD1EC380F75A77DFBE95283D1C1CD4957089FE76714A9EE42A0EB4
+  - path: Assets/ExpandedChestUIPackage/ExpandedChestUI/Textures/highlight_border.png
+    hash: 4F8C34BD8662BCC97C80CD93DE036FDF6B29DC1D8ECC5711502E59E50DA02850
+  - path: Assets/ExpandedChestUIPackage/ExpandedChestUI/Textures/hover_border.png
+    hash: EDA4D85B661DF3029CC1FE7DB7C17A6C5E6AB2607CF30894CEBCFF6F1D5C808E
+  - path: Assets/ExpandedChestUIPackage/ExpandedChestUI/Textures/missing_sprite.png
+    hash: CE854A7A315D2E38422944C093861541D13AC9AC87F56D7E4CFAAA021449E5DC
+  - path: Assets/ExpandedChestUIPackage/ExpandedChestUI/Textures/quick_stack.png
+    hash: DC6CA8A3459C620A77EE46EC544A6168AEBEA54645BE310709B2CB70F567C137
+  - path: Assets/ExpandedChestUIPackage/ExpandedChestUI/Textures/scrollbar_0.png
+    hash: 597D9A1E832ABC0884EE94A27E8AC68195EEEECC5C4CE7C04743A2047BEE7A91
+  - path: Assets/ExpandedChestUIPackage/ExpandedChestUI/Textures/scrollbar_1.png
+    hash: FF20D1EA095861D39349683E71E84AD71D70045CC5111515EC7A2E25524ABBB1
+  - path: Assets/ExpandedChestUIPackage/ExpandedChestUI/Textures/scrollbar_2.png
+    hash: 0556232E2907DDF70F87130BC2CCC53867FBEAA80B7A2477E0F32222976C38A4
+  - path: Assets/ExpandedChestUIPackage/ExpandedChestUI/Textures/shovelDesign.png
+    hash: 5DE35AA71BF8595BE716848E68166107596C95C66F43E11E42D3A9AE968FE5BA
+  - path: Assets/ExpandedChestUIPackage/ExpandedChestUI/Textures/sort_inv.png
+    hash: B628D5EBC93D74AB1045E1E58B3362659F3FC44998168657DDD3E0186183B1EC
+  - path: Assets/ExpandedChestUIPackage/ExpandedChestUI/Textures/trashcan.png
+    hash: 399E79F7DD5D59B3F5F66DFE0A06B1948F0E0E42C1F6095D5E50CA6A3DF6E1CC
+  - path: Assets/ExpandedChestUIPackage/ExpandedChestUI/Textures/upgrade_ui_1.png
+    hash: 25DD3BD22B53754077D6FB016CEEFC067F22204BB4B94DECBD3D26D2F996E8D7
+  - path: Assets/ExpandedChestUIPackage/ExpandedChestUI/Textures/upgrade_ui_2.png
+    hash: 8B26FE275D5663BBBF28F5295088D61B640DAEC2E985B50C46184DBD755E14AC
+  - path: Assets/ExpandedChestUIPackage/ExpandedChestUI/Textures/vanity_crossed_slot.png
+    hash: 75B08C6D9F3379B5670064238AF0E35457C59752805E02612C74B2ACCC3DDED7
+  - path: Assets/ExpandedChestUIPackage/ExpandedChestUI/Textures/white_pixel.png
+    hash: BACA551D6AE5DA80726A2C7B68E82E245E02AE9DA616A35A20479FCF01B05E1D
   lastBuildLinux: 1

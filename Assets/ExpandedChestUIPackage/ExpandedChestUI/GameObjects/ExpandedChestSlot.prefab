@@ -1838,7 +1838,7 @@ Animator:
   m_GameObject: {fileID: 1809366171938869}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 7cee07c4e018307418977dece4984bda, type: 2}
+  m_Controller: {fileID: 9100000, guid: 7815cc559c8890d4b883ec1ea425e18f, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -1860,6 +1860,7 @@ GameObject:
   - component: {fileID: 4374351712317943}
   - component: {fileID: 212451323447018133}
   - component: {fileID: 114994351561592255}
+  - component: {fileID: 101213439998297756}
   m_Layer: 5
   m_Name: Icon
   m_TagString: Untagged
@@ -1951,6 +1952,19 @@ MonoBehaviour:
     srcColors: []
     replacementColors: []
   activeColorReplacement: 0
+--- !u!114 &101213439998297756
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1849665687618822}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a8dee98bfd60e854a9a0636b3981d1bb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  materialName: 
 --- !u!1 &1854991306137149
 GameObject:
   m_ObjectHideFlags: 0
