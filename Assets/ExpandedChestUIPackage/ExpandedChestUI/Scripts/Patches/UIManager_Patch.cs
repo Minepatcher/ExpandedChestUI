@@ -21,12 +21,7 @@ namespace ExpandedChestUI.Scripts.Patches
             ExpandedInventoryUI instInventoryUI = instGameObject.GetComponent<ExpandedInventoryUI>();
             if (instInventoryUI == chestInventoryUI) return;
             Manager.ui.chestInventoryUI = instInventoryUI;
-            
-            Material m = chestInventoryUI?.itemSlotPrefab?.icon?.sharedMaterial;
 
-            if (instInventoryUI.itemSlotPrefab.icon.TryGetComponent(out ChangeRuntimeMaterial crm) && m != null && crm != null) 
-                crm.Apply(m);
-            
             instInventoryUI.bottomUIElements.Add(playerInvUI);
             instInventoryUI.optionalQuickStackButton.bottomUIElements.Add(playerInvUI);
             playerInvUI.topUIElements.Add(instInventoryUI);

@@ -25,6 +25,7 @@ namespace ExpandedChestUI.Scripts.Components
         protected override void Awake()
         {
             Root.SetActive(false);
+            itemSlotPrefab.icon.sharedMaterial ??= Manager.ui.chestInventoryUI.itemSlotPrefab.icon.sharedMaterial;
             base.Awake();
         }
 
