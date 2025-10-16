@@ -9,23 +9,30 @@ namespace ExpandedChestUI.Scripts.Patches
     internal class UIManagerPatch
     {
         [HarmonyPatch(typeof(UIManager), nameof(UIManager.Init))]
-        [HarmonyPostfix]
+        [HarmonyPrefix]
         // ReSharper disable once InconsistentNaming
         private static void SetupChestUIOverride(UIManager __instance)
         {
-            Transform uiTransform = __instance.chestInventoryUI.transform.parent;
-            ItemSlotsUIContainer playerInvUI = __instance.playerInventoryUI;
-            
-            GameObject instGameObject = Object.Instantiate(ExpandedChestUI.ChestUIObject, uiTransform);
-            ItemSlotsUIContainer chestInventoryUI = Manager.ui.chestInventoryUI;
-            ExpandedInventoryUI instInventoryUI = instGameObject.GetComponent<ExpandedInventoryUI>();
-            if (instInventoryUI == chestInventoryUI) return;
-            Manager.ui.chestInventoryUI = instInventoryUI;
+            var uiTransform = __instance.playerInventoryUI.transform.parent;
+            var playerInvUI = __instance.playerInventoryUI;
+            var chestInventoryUI = __instance.chestInventoryUI;
+            var newInventoryUI = ExpandedChestUI.ChestUIObject.GetComponent<ExpandedInventoryUI>();
+            newInventoryUI.itemSlotPrefab.icon.sharedMaterial ??= chestInventoryUI.itemSlotPrefab.icon.sharedMaterial;
+            if (newInventoryUI == chestInventoryUI) return;
 
-            instInventoryUI.bottomUIElements.Add(playerInvUI);
-            instInventoryUI.optionalQuickStackButton.bottomUIElements.Add(playerInvUI);
-            playerInvUI.topUIElements.Add(instInventoryUI);
-            playerInvUI.topUIElements.Add(instInventoryUI.optionalQuickStackButton);
+            GameObject instGameObject = Object.Instantiate(newInventoryUI.gameObject, uiTransform);
+            newInventoryUI = instGameObject.GetComponent<ExpandedInventoryUI>();
+
+            __instance.chestInventoryUI = newInventoryUI;
+
+            newInventoryUI.bottomUIElements.Add(playerInvUI);
+            newInventoryUI.optionalQuickStackButton.bottomUIElements.Add(playerInvUI);
+            newInventoryUI.optionalQuickStackButton.leftUIElements.Add(newInventoryUI);
+            newInventoryUI.optionalSortButton.leftUIElements.Add(newInventoryUI);
+
+            playerInvUI.topUIElements.Add(newInventoryUI.optionalQuickStackButton);
+            playerInvUI.topUIElements.Add(newInventoryUI);
+
             ExpandedChestUI.Log.LogInfo($"{ExpandedChestUI.FriendlyName} loaded successfully");
         }
     }

@@ -7,25 +7,28 @@ namespace ExpandedChestUI.Scripts.Components
     {
         public override float localScrollPosition => transform.localPosition.y + transform.parent.localPosition.y;
 
-        // ReSharper disable once InconsistentNaming
-        private bool showHoverWindow => IsMouseWithinScrollArea() && slotsUIContainer is not null &&
-                                        slotsUIContainer.scrollWindow.IsShowingPosition(localScrollPosition,
-                                            background.size.y);
-
-        public override bool isVisibleOnScreen => showHoverWindow && isActiveAndEnabled &&
-                                                  transform.lossyScale.x != 0.0 && transform.lossyScale.y != 0.0;
+        private ExpandedInventoryUI ExpandedInventoryUI => (ExpandedInventoryUI) slotsUIContainer;
+        
+        private bool ShowHoverWindow => ExpandedInventoryUI != null && ExpandedInventoryUI.uiScrollWindow.IsShowingPosition(localScrollPosition, 0);
+        public override bool isVisibleOnScreen => WithinExpandedScroll() && isActiveAndEnabled && transform.lossyScale.x != 0.0 && transform.lossyScale.y != 0.0;
 
         public override UIScrollWindow uiScrollWindow => slotsUIContainer ? slotsUIContainer.scrollWindow : null;
 
         public override void OnSelected()
         {
-            slotsUIContainer?.scrollWindow?.MoveScrollToIncludePosition(localScrollPosition, background.size.y / 2f);
+            ExpandedInventoryUI.uiScrollWindow.MoveScrollToIncludePosition(localScrollPosition, 1.375f);
             OnSelectSlot();
         }
 
-        private bool IsMouseWithinScrollArea()
+        private bool WithinExpandedScroll()
         {
-            Vector3 position1 = Manager.ui.mouse.pointer.transform.position;
+            return Manager.input.SystemPrefersKeyboardAndMouse()
+                ? IsWithinScrollArea(Manager.ui.mouse.pointer.transform.position)
+                : ShowHoverWindow;
+        }
+        
+        private bool IsWithinScrollArea(Vector3 position1)
+        {
             Vector2 size = new Vector2(uiScrollWindow.windowWidth, uiScrollWindow.windowHeight);
             Vector2 vector2 = new Vector2(uiScrollWindow.windowWidth, uiScrollWindow.windowHeight) / 2f;
             Vector3 position2 = uiScrollWindow.transform.position;

@@ -1087,7 +1087,7 @@ MonoBehaviour:
   highlight: {fileID: 0}
   animator: {fileID: 95033179943200374}
   autoDisableAnimator: 1
-  slotType: 1
+  slotType: 0
   hoverTitleWhenEmpty:
     mTerm: 
     mRTL_IgnoreArabicFix: 0
@@ -1106,7 +1106,7 @@ MonoBehaviour:
   barContainer: {fileID: 1428684104536467}
   barPivot: {fileID: 4843078328783213}
   bar: {fileID: 212620597443739501}
-  reinforceBarContainer: {fileID: 1428684104536467}
+  reinforceBarContainer: {fileID: 1635894354534304}
   reinforceBarPivot: {fileID: 4813755516803522}
   reinforceBar: {fileID: 212164412539007026}
   cooldownPivot: {fileID: 4828013535544654}

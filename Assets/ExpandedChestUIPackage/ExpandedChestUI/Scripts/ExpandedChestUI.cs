@@ -36,7 +36,7 @@ namespace ExpandedChestUI.Scripts
             {
                 case GameObject gameObject:
                 {
-                    if(gameObject.name == "ExpandedChestUI")
+                    if (gameObject.name == "ExpandedChestUI")
                         ChestUIObject = gameObject;
                     break;
                 }

@@ -26,8 +26,8 @@ MonoBehaviour:
     - path: Scripts/Scripts/ExpandedChestUI.cs
     - path: Scripts/Scripts/Components/ExpandedInventoryUI.cs
     - path: Scripts/Scripts/Components/ExpandedInventorySlotUI.cs
-    - path: Bundles/ExpandedChestUI_Windows.assetbundle
     - path: Bundles/ExpandedChestUI_Linux.assetbundle
+    - path: Bundles/ExpandedChestUI_Windows.assetbundle
     dependencies: []
   modPath: Assets\ExpandedChestUIPackage\ExpandedChestUI
   forceReimport: 1
@@ -50,9 +50,9 @@ MonoBehaviour:
   - path: Assets/ExpandedChestUIPackage/ExpandedChestUI/AnimatorController/SlotTypeHighlightEffect.controller
     hash: 360BDC2CD639CA587CCF046AE8A8F8465BD6820976F5DFB347B57136F5B15B5C
   - path: Assets/ExpandedChestUIPackage/ExpandedChestUI/GameObjects/ExpandedChestSlot.prefab
-    hash: 72D39084E155830F5925B9FAF8A80B2C9AD0D0457F61B5AF547124DAE702EB15
+    hash: A023398C22C61A24EA7C4AFFF1C7D83F77AEF0B8AE5F65006A72C445C4AC3384
   - path: Assets/ExpandedChestUIPackage/ExpandedChestUI/GameObjects/ExpandedChestUI.prefab
-    hash: 7FA4BB80EDD3FF1116F0E4246A9BA928178026F442DB53AB694EC7ABB0AD7538
+    hash: 03AAC1E6320AE77361159295F096BA262D9D7C03BB9A21CFD3C57198DE5DBCDC
   - path: Assets/ExpandedChestUIPackage/ExpandedChestUI/Textures/16x16white.png
     hash: 9C2FCFBB97B34614052BE075A8BD4D1E626412DC87DB62356AA8E7BD7887EF4A
   - path: Assets/ExpandedChestUIPackage/ExpandedChestUI/Textures/active_border.png

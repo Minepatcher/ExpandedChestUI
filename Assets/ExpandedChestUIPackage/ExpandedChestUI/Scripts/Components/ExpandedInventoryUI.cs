@@ -21,11 +21,14 @@ namespace ExpandedChestUI.Scripts.Components
         public int maxRows;
         public override int MAX_COLUMNS => maxColumns;
         public override int MAX_ROWS => maxRows;
+        
+        private float _currentScroll;
+        
+        public override UIScrollWindow uiScrollWindow => GetComponent<UIScrollWindow>();
 
         protected override void Awake()
         {
             Root.SetActive(false);
-            itemSlotPrefab.icon.sharedMaterial ??= Manager.ui.chestInventoryUI.itemSlotPrefab.icon.sharedMaterial;
             base.Awake();
         }
 
@@ -38,6 +41,12 @@ namespace ExpandedChestUI.Scripts.Components
             {
                 scrollWindow.enabled = true;
                 scrollWindow.ResetScroll();
+            }
+            if (Manager.ui.currentSelectedUIElement is ExpandedInventorySlotUI  && (!Manager.input.SystemPrefersKeyboardAndMouse() || !Manager.input.SystemIsUsingMouse()))
+            {
+                Manager.ui.DeselectAnySelectedUIElement();
+                itemSlots[0].Select();
+                Manager.ui.mouse.PlaceMousePositionOnSelectedUIElementWhenControlledByJoystick();
             }
             foreach (var itemSlot in itemSlots)
             {
@@ -75,8 +84,9 @@ namespace ExpandedChestUI.Scripts.Components
             float sideStartPosition = GetSideStartPosition(visibleColumns);
             int amountOfActiveSlots = _amountOfActiveSlots;
             _amountOfActiveSlots = 0;
-            foreach (SlotUIBase itemSlot in itemSlots)
+            foreach (var slotUIBase in itemSlots)
             {
+                var itemSlot = (ExpandedInventorySlotUI)slotUIBase;
                 float slotX = itemSlot.uiSlotXPosition;
                 float slotY = itemSlot.uiSlotYPosition;
                 if (slotX < visibleColumns && slotY < visibleRows && _amountOfActiveSlots < inventoryHandler.size)
@@ -88,7 +98,11 @@ namespace ExpandedChestUI.Scripts.Components
                     ++_amountOfActiveSlots;
                 }
                 else
+                {
+                    itemSlot.visibleSlotIndex = -1;
                     itemSlot.gameObject.SetActive(false);
+                }
+                    
             }
             if (amountOfActiveSlots != _amountOfActiveSlots) MarkSlotsAsDirty();
             float height = visibleRows * spread;
@@ -201,22 +215,19 @@ namespace ExpandedChestUI.Scripts.Components
 
         public new bool IsBottomElementSelected()
         {
-            if (Manager.ui.currentSelectedUIElement is null) return false;
-            int index = itemSlots.FindIndex(x => x == Manager.ui.currentSelectedUIElement) + 1;
-            int lastColumnIndex = _amountOfActiveSlots - visibleColumns + 1;
-            return index >= lastColumnIndex && index <= _amountOfActiveSlots;
-        }
+            return false;
+        } 
 
         public new bool IsTopElementSelected()
         {
-            if (Manager.ui.currentSelectedUIElement is null) return false;
-            int index = itemSlots.FindIndex(x => x == Manager.ui.currentSelectedUIElement) + 1;
-            return index <= visibleColumns;
+            return false;
         }
 
         public new float GetCurrentWindowHeight()
         {
             return visibleRows * spread;
         }
+        
+        public UIScrollWindow GetScrollWindow() => scrollWindow;
     }
 }
