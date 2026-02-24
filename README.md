@@ -4,7 +4,7 @@ This mod replaces the default Core Keeper Chest UI for a more expansive UI that 
 # Usage
 For those that wish to use this mod to create thier own chests. Simply add the following code to your dependencies in your manifest.json file.
 ```json
-"ck.modding.expanded-chest-ui": "https://github.com/Minepatcher/ExpandedChestUI.git?path=/Assets/ExpandedChestUI#main"
+"ck.modding.expanded-chest-ui": "https://github.com/Minepatcher/ExpandedChestUI.git?path=/Assets/ExpandedChestUIPackage#main"
 ```
 Then, add Expanded Chest UI to your Mod's _Assembly Definition References_ in the .asmdef file and the _Mod Builder Settings_ <mod>.asset file. **NOTE:** If you don't have CoreLib you won't get the dropdown of the _Mod Builder Settings_, so just type it in.
 
