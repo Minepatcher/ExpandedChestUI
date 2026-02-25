@@ -103,4 +103,5 @@ InitTestScene*.unity*
 /[Aa]ssets/Resources*
 /[Pp]ackages*
 /[Pp]rojectSettings*
-/ImportedGameFolders
+/ImportedGameFolders*
+/Assets/Expanded Chest UI*
