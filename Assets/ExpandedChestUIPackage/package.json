@@ -15,6 +15,6 @@
     "url": "https://github.com/Minepatcher/ExpandedChestUI/issues"
   },
   "dependencies": {
-    "ck.modding.corelib": "4.0.0"
+    "ck.modding.corelib": "4.x.x"
   }
 }
