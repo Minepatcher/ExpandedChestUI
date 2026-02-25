@@ -1,0 +1,67 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bc43e4983a160e543856e5ba0421c9e1, type: 3}
+  m_Name: ExpandedChestUI
+  m_EditorClassIdentifier: 
+  metadata:
+    guid: f8a04e7b4ea8494da9420f449009c107
+    name: ExpandedChestUI
+    skipSafetyChecks: 0
+    disableScripts: 0
+    accessesExtraAssemblies: 1
+    disableHarmonyPatching: 0
+    requiredOn: 0
+    files:
+    - path: Scripts/Scripts/Patches/UIManager_Patch.cs
+      guid: 30b3bacdda6ef7249bacb06ba6c97655
+    - path: Scripts/Scripts/Patches/PlayerController_Patch.cs
+      guid: 2a9efcf6f296a6c4a90baf16a6c4df8b
+    - path: Scripts/Scripts/ExpandedChestUI.cs
+      guid: 062241de537b1044d8b79f9f8adb68af
+    - path: Scripts/Scripts/Components/ExpandedInventoryUI.cs
+      guid: eead70fa8515c6f4a84eb62f2a6262fd
+    - path: Scripts/Scripts/Components/ExpandedInventorySlotUI.cs
+      guid: f349b8ec6038a0941b395a8d0c023457
+    - path: Bundles/ExpandedChestUI_Linux.assetbundle
+      guid: 
+    - path: Bundles/ExpandedChestUI_Linux.assetbundle.manifest
+      guid: 
+    - path: Bundles/ExpandedChestUI_Windows.assetbundle
+      guid: 
+    - path: Bundles/ExpandedChestUI_Windows.assetbundle.manifest
+      guid: 
+    dependencies: []
+  modPath: Assets\ExpandedChestUIPackage\ExpandedChestUI
+  forceReimport: 1
+  buildBundles: 1
+  cacheBundles: 0
+  buildLinux: 1
+  assets:
+  - path: Assets/ExpandedChestUIPackage/ExpandedChestUI/AnimatorController/error.anim
+    hash: 7E25A551856702112D0D575B96AAA0A7E4A2155A13C13FAA16BAF79FE186F280
+  - path: Assets/ExpandedChestUIPackage/ExpandedChestUI/AnimatorController/idle_1.anim
+    hash: 278BC95DC6378AE5B982428CB679017A853B2C9CB1E872B7F87F8CD2249598BC
+  - path: Assets/ExpandedChestUIPackage/ExpandedChestUI/AnimatorController/ItemSlot.controller
+    hash: C9F6A8C1DD661D0B5F2639DB65854F7E01633CCD1509059AC23FB04FF5E03032
+  - path: Assets/ExpandedChestUIPackage/ExpandedChestUI/AnimatorController/nonError.anim
+    hash: 514751B54185464B3EF1DFB373898A67CD6411AA44B5C288702176FDDACC37DB
+  - path: Assets/ExpandedChestUIPackage/ExpandedChestUI/AnimatorController/scaleUp.anim
+    hash: E49C6AE2A38EAD02B9957D2A504F081164205B5D8B22EE91C6A74289F1DF28DF
+  - path: Assets/ExpandedChestUIPackage/ExpandedChestUI/AnimatorController/slotTypeHighlightEffect.anim
+    hash: 5D63215C44246F885CD1174DACDD4145E8ED7C72166829925EF97D7519F6545B
+  - path: Assets/ExpandedChestUIPackage/ExpandedChestUI/AnimatorController/SlotTypeHighlightEffect.controller
+    hash: 360BDC2CD639CA587CCF046AE8A8F8465BD6820976F5DFB347B57136F5B15B5C
+  - path: Assets/ExpandedChestUIPackage/ExpandedChestUI/GameObjects/ExpandedChestSlot.prefab
+    hash: 99A7F01A6551525E0A1E7E9C37EAD927922E25C6225B3E30E9E26189265EE215
+  - path: Assets/ExpandedChestUIPackage/ExpandedChestUI/GameObjects/ExpandedChestUI.prefab
+    hash: D4FB674FEE407FD2023BDCFDB5F1BB16E4E30C63A8DB73453114684F3D993C95
+  lastBuildLinux: 1

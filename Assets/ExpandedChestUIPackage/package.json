@@ -1,10 +1,20 @@
 {
   "name": "ck.modding.expanded-chest-ui",
+  "author":"Minepatcher",
+  "version": "0.2.0",
   "displayName":"Expanded Chest UI",
-  "version": "0.1.0",
-  "unity": "2021.3",
-  "keywords": [],
+  "unity": "6000.0",
   "category": "Modding",
   "description": "A Core Keeper Mod that replaces the default Chest UI with a scroll-able UI.",
-  "dependencies": {}
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Minepatcher/ExpandedChestUI.git",
+    "directory": "Assets/ExpandedChestUIPackage"
+  },
+  "bugs": {
+    "url": "https://github.com/Minepatcher/ExpandedChestUI/issues"
+  },
+  "dependencies": {
+    "ck.modding.corekeeper": "https://github.com/Minepatcher/CoreKeeper.git?path=/Assets/CoreKeeperPackage#4.0.0"
+  }
 }
