@@ -13,7 +13,7 @@ For those that wish to use this mod to create their own chests. Add the followin
 "ck.modding.expanded-chest-ui": "https://github.com/Minepatcher/ExpandedChestUI.git?path=/Assets/ExpandedChestUIPackage#0.3.0"
 ```
 
-> **Warning:** This mod now requires CoreLib for modding, but is not required to be added to dependency.
+> **Warning:** This mod now requires CoreLib for modding, but is not required to be added as a dependency.
 
 Then, add Expanded Chest UI to your Mod's _Mod Builder Setting_ in the project's root folder and press the `Sync asmdef file` button. This will update your asmdef file in your mod folder.
 
