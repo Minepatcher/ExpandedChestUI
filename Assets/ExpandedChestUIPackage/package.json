@@ -15,6 +15,6 @@
     "url": "https://github.com/Minepatcher/ExpandedChestUI/issues"
   },
   "dependencies": {
-    "ck.modding.corekeeper": "https://github.com/Minepatcher/CoreKeeper.git?path=/Assets/CoreKeeperPackage#4.0.0"
+    "ck.modding.corekeeper": "4.0.0"
   }
 }
