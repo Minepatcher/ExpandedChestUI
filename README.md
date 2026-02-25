@@ -27,4 +27,4 @@ Everything else for creating your chest is the same as usual, but now you are al
 
 ENJOY!!!
 
-![ExpandedChestUI](https://github.com/user-attachments/assets/a389ba69-3cb3-495b-888d-e37e6d2ba599)
+![ExpandedChestUI](Assets/Images/expanded-chest-ui.gif)
