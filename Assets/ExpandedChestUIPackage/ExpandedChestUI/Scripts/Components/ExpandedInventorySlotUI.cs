@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Pug.UnityExtensions;
+using UnityEngine;
 
 // ReSharper disable once CheckNamespace
 namespace ExpandedChestUI.Scripts.Components
@@ -7,33 +8,41 @@ namespace ExpandedChestUI.Scripts.Components
     {
         public override float localScrollPosition => transform.localPosition.y + transform.parent.localPosition.y;
 
-        private ExpandedInventoryUI ExpandedInventoryUI => (ExpandedInventoryUI) slotsUIContainer;
+        public ExpandedInventoryUI ExpandedInventoryUI => (ExpandedInventoryUI)slotsUIContainer;
+
+        public override bool isVisibleOnScreen => WithinExpandedScroll() && isActiveAndEnabled &&
+                                                  transform.lossyScale.x != 0.0 && transform.lossyScale.y != 0.0;
+
+        public override UIScrollWindow  uiScrollWindow => ExpandedInventoryUI ? ExpandedInventoryUI.scrollWindow : null;
         
-        private bool ShowHoverWindow => ExpandedInventoryUI != null && ExpandedInventoryUI.uiScrollWindow.IsShowingPosition(localScrollPosition, 0);
-        public override bool isVisibleOnScreen => WithinExpandedScroll() && isActiveAndEnabled && transform.lossyScale.x != 0.0 && transform.lossyScale.y != 0.0;
-
-        public override UIScrollWindow uiScrollWindow => slotsUIContainer ? slotsUIContainer.scrollWindow : null;
-
-        public override void OnSelected()
+        /*public override void OnSelected()
         {
-            ExpandedInventoryUI.uiScrollWindow.MoveScrollToIncludePosition(localScrollPosition, 1.375f);
+            ExpandedInventoryUI.scrollWindow.MoveScrollToIncludePosition(localScrollPosition, background.size.y / 2f);
             OnSelectSlot();
-        }
+        }*/
 
         private bool WithinExpandedScroll()
         {
             return Manager.input.SystemPrefersKeyboardAndMouse()
                 ? IsWithinScrollArea(Manager.ui.mouse.pointer.transform.position)
-                : ShowHoverWindow;
+                : IsWithinScrollArea(transform.position);
         }
-        
-        private bool IsWithinScrollArea(Vector3 position1)
+
+        public bool IsWithinScrollArea(Vector3 contained)
         {
-            Vector2 size = new Vector2(uiScrollWindow.windowWidth, uiScrollWindow.windowHeight);
-            Vector2 vector2 = new Vector2(uiScrollWindow.windowWidth, uiScrollWindow.windowHeight) / 2f;
-            Vector3 position2 = uiScrollWindow.transform.position;
-            return new Rect(new Vector2(position2.x, position2.y) + uiScrollWindow.windowLocalCenter - vector2, size)
-                .Contains(position1);
+            var size = new Vector2(uiScrollWindow.windowWidth, uiScrollWindow.windowHeight);
+            var position = uiScrollWindow.transform.position.To2D();
+            var rect = new Rect { size = size, center = position };
+            return rect.Contains(contained);
+        }
+
+        public override UIelement GetAdjacentUIElement(Direction.Id dir, Vector3 currentPosition)
+        {
+            var adjacentUiElement1 = base.GetAdjacentUIElement(dir, currentPosition);
+            var adjacentUiElement2 = ExpandedInventoryUI.GetAdjacentUIElement(dir, currentPosition);
+            return adjacentUiElement1 is not SlotUIBase ? adjacentUiElement1 ? adjacentUiElement1 : adjacentUiElement2 :
+                adjacentUiElement1 && adjacentUiElement1.isVisibleOnScreen ? adjacentUiElement1 :
+                adjacentUiElement2;
         }
     }
 }

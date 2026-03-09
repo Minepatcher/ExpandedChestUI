@@ -8,7 +8,6 @@ namespace ExpandedChestUI.Scripts.Components
 {
     public class ExpandedInventoryUI : InventoryUI, IScrollable
     {
-        public SpriteMask scrollMask;
         public GameObject root;
         private GameObject Root => root;
         
@@ -22,36 +21,36 @@ namespace ExpandedChestUI.Scripts.Components
         public override int MAX_COLUMNS => maxColumns;
         public override int MAX_ROWS => maxRows;
         
-        private float _currentScroll;
-        
-        public override UIScrollWindow uiScrollWindow => GetComponent<UIScrollWindow>();
-
         protected override void Awake()
         {
             Root.SetActive(false);
             base.Awake();
         }
-
+        
         public override void ShowContainerUI()
         {
             Root.SetActive(true);
             UpdateContainerSize();
             itemSlotsRoot.gameObject.SetActive(true);
-            if (scrollWindow is not null)
+            if (scrollWindow != null)
             {
                 scrollWindow.enabled = true;
                 scrollWindow.ResetScroll();
             }
-            if (Manager.ui.currentSelectedUIElement is ExpandedInventorySlotUI  && (!Manager.input.SystemPrefersKeyboardAndMouse() || !Manager.input.SystemIsUsingMouse()))
+
+            if (Manager.ui.currentSelectedUIElement is not ExpandedInventorySlotUI) return;
+            var selectedSlot = (ExpandedInventorySlotUI)Manager.ui.currentSelectedUIElement;
+            if (selectedSlot.visibleSlotIndex > _amountOfActiveSlots)
             {
                 Manager.ui.DeselectAnySelectedUIElement();
-                itemSlots[0].Select();
+                firstSlot.Select();
+                scrollWindow.enabled = true;
+                scrollWindow.ResetScroll();
                 Manager.ui.mouse.PlaceMousePositionOnSelectedUIElementWhenControlledByJoystick();
             }
-            foreach (var itemSlot in itemSlots)
+            else
             {
-                if (itemSlot.gameObject.activeInHierarchy)
-                    itemSlot.UpdateSlot();
+                scrollWindow.MoveScrollToIncludePosition(selectedSlot.localScrollPosition, 0);
             }
         }
 
@@ -64,7 +63,7 @@ namespace ExpandedChestUI.Scripts.Components
         private void Update()
         {
             if (!isShowing || !autoPositionSlots) return;
-            UpdateContainerSize();
+            //UpdateContainerSize();
             TriggerInventoryAchievements();
             if (!SlotsNeedsRefresh()) return;
             MarkSlotsAsDirty();
@@ -73,17 +72,18 @@ namespace ExpandedChestUI.Scripts.Components
         private void UpdateContainerSize()
         {
             if (Manager.main.player is null) return;
-            InventoryHandler inventoryHandler = GetInventoryHandler();
+            var inventoryHandler = GetInventoryHandler();
             if (inventoryHandler == null) return;
             int size = inventoryHandler.size;
             if (_previousInventorySize == size) return;
-            ExpandedChestUI.Log.LogInfo($"UpdateContainerSize: {size} - {_previousInventorySize}");
             _previousInventorySize = size;
             visibleRows = Mathf.CeilToInt((float)inventoryHandler.size / inventoryHandler.columns);
             visibleColumns = inventoryHandler.columns;
             float sideStartPosition = GetSideStartPosition(visibleColumns);
             int amountOfActiveSlots = _amountOfActiveSlots;
             _amountOfActiveSlots = 0;
+            float height = visibleRows * spread;
+            UpdateExtendedInventoryBackground(height);
             foreach (var slotUIBase in itemSlots)
             {
                 var itemSlot = (ExpandedInventorySlotUI)slotUIBase;
@@ -92,7 +92,7 @@ namespace ExpandedChestUI.Scripts.Components
                 if (slotX < visibleColumns && slotY < visibleRows && _amountOfActiveSlots < inventoryHandler.size)
                 {
                     itemSlot.visibleSlotIndex = _amountOfActiveSlots;
-                    itemSlot.transform.localPosition = new Vector3(sideStartPosition + slotX * spread, -slotY * spread, 0.0f);
+                    itemSlot.transform.localPosition = new Vector3(slotX * spread, -slotY * spread, 0.0f);
                     itemSlot.gameObject.SetActive(true);
                     itemSlot.UpdateSlot();
                     ++_amountOfActiveSlots;
@@ -102,28 +102,26 @@ namespace ExpandedChestUI.Scripts.Components
                     itemSlot.visibleSlotIndex = -1;
                     itemSlot.gameObject.SetActive(false);
                 }
-                    
+
             }
             if (amountOfActiveSlots != _amountOfActiveSlots) MarkSlotsAsDirty();
-            float height = visibleRows * spread;
-            UpdateExtendedInventoryBackground(height);
             if (inventoryHandler.entityMonoBehaviour is null) return;
-            ButtonUIElement[] buttonUIElements = gameObject.GetComponentsInChildren<ButtonUIElement>(true);
+            var buttonUIElements = gameObject.GetComponentsInChildren<ButtonUIElement>(true);
             int buttonYGridCount = Mathf.Min(buttonUIElements.Length - 1, 3);
             bool hasScroll = height > scrollWindow.windowHeight;
             for (int index = 0; index < buttonUIElements.Length; index++)
             {
-                ButtonUIElement buttonUIElement = buttonUIElements[index];
+                var buttonUIElement = buttonUIElements[index];
                 if (buttonUIElement.name == "Handle")
                 {
                     buttonUIElement.transform.parent.parent.localPosition = new Vector3(
-                        -sideStartPosition + 0.85f,
+                        -sideStartPosition + 1f,
                         scrollWindow.scrollBar.transform.localPosition.y,
                         scrollWindow.scrollBar.transform.localPosition.z);
                 } else if (inventoryHandler.entityMonoBehaviour is Chest { showSortAndQuickStackButtons: true })
                 {
                     buttonUIElement.transform.localPosition = new Vector3(
-                        -sideStartPosition + (hasScroll ? 1.8f : spread) + (Mathf.FloorToInt((index - 1) / 3f) * spread),
+                        -sideStartPosition + (hasScroll ? 2f : spread) + (Mathf.FloorToInt((index - 1) / 3f) * spread),
                         -GetSideStartPosition(buttonYGridCount) - (((index - 1) % buttonYGridCount) * spread),
                         buttonUIElement.transform.localPosition.z);
                     buttonUIElement.gameObject.SetActive(true);
@@ -137,23 +135,20 @@ namespace ExpandedChestUI.Scripts.Components
         private void UpdateExtendedInventoryBackground(float height)
         {
             height = Mathf.Min(height, 3 * spread);
-            Vector2 vector2 = new Vector2(visibleColumns * spread, height);
+            var vector2 = new Vector2(visibleColumns * spread, height);
             if (backgroundSR is not null) backgroundSR.size = vector2;
             if (backgroundBlockCollider is not null) backgroundBlockCollider.size = new Vector3(vector2.x, vector2.y, backgroundBlockCollider.size.z);
-            if (scrollMask is not null) scrollMask.transform.localScale = new Vector3(vector2.x, vector2.y, scrollMask.transform.localScale.z);
             if (scrollWindow is null) return;
             scrollWindow.windowWidth = vector2.x;
-            scrollWindow.windowHeight = vector2.y;
-            scrollWindow.ResetScroll();
-            if (backgroundSR is not null) itemSlotsRoot.transform.parent.parent.localPosition = new Vector3(0.0f, backgroundSR.localBounds.max.y - spread / 2, 0.0f);
+            if (backgroundSR is not null) itemSlotsRoot.transform.parent.parent.localPosition = new Vector3(backgroundSR.localBounds.min.x + (spread / 2), backgroundSR.localBounds.max.y - (spread / 2), 0.0f);
         }
 
         private bool SlotsNeedsRefresh()
         {
-            InventoryHandler inventoryHandler = GetInventoryHandler();
+            var inventoryHandler = GetInventoryHandler();
             if (inventoryHandler == null) return false;
-            List<ObjectCategoryTag> inventoryRequirementTags = inventoryHandler.GetInventoryRequirementTags();
-            ObjectCategoryTag objectCategoryTag = inventoryRequirementTags is not { Count: > 0 } ? ObjectCategoryTag.None : inventoryRequirementTags[0];
+            var inventoryRequirementTags = inventoryHandler.GetInventoryRequirementTags();
+            var objectCategoryTag = inventoryRequirementTags is not { Count: > 0 } ? ObjectCategoryTag.None : inventoryRequirementTags[0];
             if (objectCategoryTag == _currentRequirementTag) return false;
             _currentRequirementTag = objectCategoryTag;
             return true;
@@ -163,7 +158,8 @@ namespace ExpandedChestUI.Scripts.Components
         {
             foreach (var itemSlot in itemSlots)
             {
-                if (itemSlot.isShowing) ((ExpandedInventorySlotUI)itemSlot).dirty = true;
+                var expandedSlot = (ExpandedInventorySlotUI)itemSlot;
+                if (expandedSlot.isShowing) expandedSlot.dirty = true;
             }
         }
 
@@ -176,17 +172,18 @@ namespace ExpandedChestUI.Scripts.Components
                 _ => objectID
             };
         }
-        
+
         private void TriggerInventoryAchievements()
         {
-            if (containerType != ItemSlotsUIContainerType.ChestInventory 
+            if (containerType != ItemSlotsUIContainerType.ChestInventory
                 || Manager.achievements.HasTriggeredAchievement(AchievementID.PetColors))
                 return;
             var dictionary = new Dictionary<ObjectID, HashSet<int>>();
             foreach (var itemSlot in itemSlots)
             {
-                if (!itemSlot.isShowing) continue;
-                var containedObject = itemSlot.GetContainedObject();
+                var expandedSlot = (ExpandedInventorySlotUI)itemSlot;
+                if (!expandedSlot.isShowing) continue;
+                var containedObject = expandedSlot.GetContainedObject();
                 var objectId = containedObject.objectID;
                 if (!InventoryHandler.TryGetExtraInventoryData(containedObject.auxDataIndex, out PetSkinCD data))
                     continue;
@@ -204,30 +201,22 @@ namespace ExpandedChestUI.Scripts.Components
             }
         }
 
-        private float GetSideStartPosition(int size)
-        {
-            return (float) -((size - 1) / 2.0) * spread;
-        }
-        
-        public new void UpdateContainingElements(float scroll)
-        {
-        }
+        private float GetSideStartPosition(int size) => -((size - 1f) / 2f) * spread;
+
+        public new void UpdateContainingElements(float scroll) { }
 
         public new bool IsBottomElementSelected()
         {
-            return false;
-        } 
+            var selected = Manager.ui.currentSelectedUIElement;
+            return selected != null && itemSlots.FindAll(x => x.uiSlotYPosition == (visibleRows - 1)).Exists(x => x == selected);
+        }
 
         public new bool IsTopElementSelected()
         {
-            return false;
+            var selected = Manager.ui.currentSelectedUIElement;
+            return selected != null && itemSlots.FindAll(x => x.uiSlotYPosition == 0).Exists(x => x == selected);
         }
 
-        public new float GetCurrentWindowHeight()
-        {
-            return visibleRows * spread;
-        }
-        
-        public UIScrollWindow GetScrollWindow() => scrollWindow;
+        public new float GetCurrentWindowHeight() => Mathf.Max(0f, visibleRows * spread);
     }
 }
