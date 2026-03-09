@@ -77,7 +77,7 @@ MonoBehaviour:
   backgroundSR: {fileID: 8730146003195777653}
   backgroundBlockCollider: {fileID: 7149636468548796854}
   additionalBackgroundSRs: []
-  scrollWindow: {fileID: 0}
+  scrollWindow: {fileID: 7451636751188265143}
   dontShowLockedIcon: 1
   mainInventorySlotsContainer: {fileID: 0}
   pouchSlotsContainers: []
