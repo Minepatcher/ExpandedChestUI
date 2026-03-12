@@ -86,7 +86,6 @@ namespace ExpandedChestUI.Scripts.Patches
             Pug.UnityExtensions.Direction.Id dir,
             UIelement currentElement, ref UIelement adjacentElement, ref bool __result)
         {
-            if (__instance.name != "ExpandedChestUI") return;
             ExpandedChestUI.Log.LogInfo($"TryGetVisibleAdjacentUIElement: Dir: {dir}, Current Element: {currentElement}");
             if (currentElement != null && currentElement is SlotUIBase slotUIBase)
             {
