@@ -2,11 +2,8 @@ using ExpandedChestUI.Scripts.Components;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using ExpandedChestUI.Scripts.Util;
 using HarmonyLib;
 using PugMod;
-using Unity.Mathematics;
-using UnityEngine;
 using Object = UnityEngine.Object;
 
 /*  Taken from Minitte's Inventory Size Patch
@@ -22,8 +19,7 @@ namespace ExpandedChestUI.Scripts.Patches
         [HarmonyPatch(typeof(PlayerController), "DetectUndiscoveredObjectsInInventory")]
         [HarmonyPrefix]
         // ReSharper disable once InconsistentNaming
-        private static bool DetectUndiscoveredObjectsInInventory_Prefix(InventoryHandler inventoryHandler,
-            PlayerController __instance)
+        private static bool DetectUndiscoveredObjectsInInventory_Prefix(InventoryHandler inventoryHandler, PlayerController __instance)
         {
             // Harmony access tools not allowed, used CoreLib's reflection util instead.
             var field = __instance.GetType()
@@ -80,6 +76,39 @@ namespace ExpandedChestUI.Scripts.Patches
             playerInvUI.topUIElements.Add(newInventoryUI);
 
             ExpandedChestUI.Log.LogInfo($"{ExpandedChestUI.FriendlyName} loaded successfully");
+        }
+
+
+        [HarmonyPatch(typeof(UIScrollWindow), "TryGetVisibleAdjacentUIElement")]
+        [HarmonyPostfix]
+        // ReSharper disable all InconsistentNaming
+        public static void TryGetVisibleAdjacentUIElement_Prefix(UIScrollWindow __instance,
+            Pug.UnityExtensions.Direction.Id dir,
+            UIelement currentElement, ref UIelement adjacentElement, ref bool __result)
+        {
+            if (__instance.name != "ExpandedChestUI") return;
+            ExpandedChestUI.Log.LogInfo($"TryGetVisibleAdjacentUIElement: Dir: {dir}, Current Element: {currentElement}");
+            if (currentElement != null && currentElement is SlotUIBase slotUIBase)
+            {
+                ExpandedChestUI.Log.LogInfo($"\nCurrent Element Index: { slotUIBase.visibleSlotIndex }" +
+                                            $"\nCurrent Element X Position: { slotUIBase.uiSlotXPosition }" +
+                                            $"\nCurrent Element Y Position: { slotUIBase.uiSlotYPosition }");
+                var scrollPosition = __instance.scrollingContent.localPosition.y;
+                ExpandedChestUI.Log.LogInfo($"\nCurrent Transform: {currentElement.transform.localPosition}" +
+                                            $"\nContainer Transform: {currentElement.transform.parent.localPosition} " +
+                                            $"\nScroll Transform: {currentElement.transform.parent.parent.localPosition} " +
+                                            $"\nScroll Container: {currentElement.transform.parent.parent.parent.localPosition}");
+                ExpandedChestUI.Log.LogInfo($"Current Element Position: { currentElement.localScrollPosition }, " +
+                                            $"\nScroll Position: {scrollPosition}, " +
+                                            $"\nAdd: {currentElement.localScrollPosition + scrollPosition}");
+            }
+            ExpandedChestUI.Log.LogInfo($"Adjecent Element: {adjacentElement}, Result: {__result}");
+            if (adjacentElement != null && adjacentElement is SlotUIBase slotUIBase1)
+            {
+                ExpandedChestUI.Log.LogInfo($"\nAdjecent Element Index: { slotUIBase1.visibleSlotIndex }" +
+                                            $"\nAdjecent Element X Position: { slotUIBase1.uiSlotXPosition }" +
+                                            $"\nAdjecent Element Y Position: { slotUIBase1.uiSlotYPosition }");
+            }
         }
     }
 }

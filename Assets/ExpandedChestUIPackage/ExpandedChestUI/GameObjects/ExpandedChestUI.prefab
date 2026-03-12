@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4863966937079520880}
   - component: {fileID: 4908264272393638134}
-  - component: {fileID: 7451636751188265143}
+  - component: {fileID: 5871516513338901833}
   m_Layer: 0
   m_Name: ExpandedChestUI
   m_TagString: Untagged
@@ -77,19 +77,14 @@ MonoBehaviour:
   backgroundSR: {fileID: 8730146003195777653}
   backgroundBlockCollider: {fileID: 7149636468548796854}
   additionalBackgroundSRs: []
-  scrollWindow: {fileID: 7451636751188265143}
+  scrollWindow: {fileID: 5871516513338901833}
   dontShowLockedIcon: 1
-  mainInventorySlotsContainer: {fileID: 0}
-  pouchSlotsContainers: []
-  extendSlotsDownwards: 0
-  keepBackgroundPositionAndSizeTheSame: 0
   optionalQuickStackButton: {fileID: 3820423020001120450}
   optionalSortButton: {fileID: 6981124740979014511}
-  quickStackToNearbyButton: {fileID: 0}
   root: {fileID: 1474595003434133660}
   maxColumns: 16
   maxRows: 9
---- !u!114 &7451636751188265143
+--- !u!114 &5871516513338901833
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -113,13 +108,13 @@ MonoBehaviour:
   arrowDown: {fileID: 0}
   arrowDownInactive: {fileID: 0}
   dontForcePixelPerfect: 0
-  scrollMultiplierSpeedMouse: 0.5
+  scrollMultiplierSpeedMouse: 0.6875
   scrollMultiplierSpeedJoystick: 0.3
   scrollWithLeftStick: 0
   allowScrollWithArrowKeys: 0
   cursorMustBeInsideWindowToScroll: 1
   anyElementMustBeSelectedToScrollWithController: 1
-  padding: 0
+  padding: 1
   autoHideScrollbar: 1
   centerVertically: 0
 --- !u!1 &443694058853190708
@@ -152,7 +147,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.375, y: 1.375, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8492266701293799893}
@@ -201,7 +196,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: -3
-  m_Sprite: {fileID: 21300000, guid: b5047dee49986a34cb5dbb6b6cf7dcaf, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 29a8eb10ef8f6394486dc3960b4c08bc, type: 3}
   m_Color: {r: 0, g: 0, b: 0, a: 0.9019608}
   m_FlipX: 0
   m_FlipY: 0
@@ -1775,7 +1770,7 @@ MonoBehaviour:
   onElementDeselectedEvent:
     m_PersistentCalls:
       m_Calls: []
-  scrollWindow: {fileID: 7451636751188265143}
+  scrollWindow: {fileID: 5871516513338901833}
   root: {fileID: 4502646496704136099}
   background: {fileID: 8015238587208098540}
   handle: {fileID: 785473025809002979}

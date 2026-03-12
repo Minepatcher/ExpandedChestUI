@@ -9,17 +9,19 @@ namespace ExpandedChestUI.Scripts.Components
         public override float localScrollPosition => transform.localPosition.y + transform.parent.localPosition.y;
 
         public ExpandedInventoryUI ExpandedInventoryUI => (ExpandedInventoryUI)slotsUIContainer;
+        
+        private bool ShowHoverWindow => ExpandedInventoryUI.scrollWindow.IsShowingPosition(localScrollPosition, background.size.y / 2f);
 
-        public override bool isVisibleOnScreen => WithinExpandedScroll() && isActiveAndEnabled &&
+        public override bool isVisibleOnScreen => ShowHoverWindow && WithinExpandedScroll() && isActiveAndEnabled &&
                                                   transform.lossyScale.x != 0.0 && transform.lossyScale.y != 0.0;
 
         public override UIScrollWindow  uiScrollWindow => ExpandedInventoryUI ? ExpandedInventoryUI.scrollWindow : null;
         
-        /*public override void OnSelected()
+        public override void OnSelected()
         {
-            ExpandedInventoryUI.scrollWindow.MoveScrollToIncludePosition(localScrollPosition, background.size.y / 2f);
+            uiScrollWindow.MoveScrollToIncludePosition(localScrollPosition, background.size.y / 2f);
             OnSelectSlot();
-        }*/
+        }
 
         private bool WithinExpandedScroll()
         {

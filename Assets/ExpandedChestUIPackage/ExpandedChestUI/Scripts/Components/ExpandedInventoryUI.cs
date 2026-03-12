@@ -6,8 +6,11 @@ using UnityEngine;
 // ReSharper disable once CheckNamespace
 namespace ExpandedChestUI.Scripts.Components
 {
-    public class ExpandedInventoryUI : InventoryUI, IScrollable
+    public class ExpandedInventoryUI : ItemSlotsUIContainer, IScrollable
     {
+        [Header("Expanded Inventory UI")]
+        public ButtonUIElement optionalQuickStackButton;
+        public ButtonUIElement optionalSortButton;
         public GameObject root;
         private GameObject Root => root;
         
@@ -40,7 +43,7 @@ namespace ExpandedChestUI.Scripts.Components
 
             if (Manager.ui.currentSelectedUIElement is not ExpandedInventorySlotUI) return;
             var selectedSlot = (ExpandedInventorySlotUI)Manager.ui.currentSelectedUIElement;
-            if (selectedSlot.visibleSlotIndex > _amountOfActiveSlots)
+            if (selectedSlot.visibleSlotIndex >= _amountOfActiveSlots)
             {
                 Manager.ui.DeselectAnySelectedUIElement();
                 firstSlot.Select();
@@ -92,7 +95,7 @@ namespace ExpandedChestUI.Scripts.Components
                 if (slotX < visibleColumns && slotY < visibleRows && _amountOfActiveSlots < inventoryHandler.size)
                 {
                     itemSlot.visibleSlotIndex = _amountOfActiveSlots;
-                    itemSlot.transform.localPosition = new Vector3(slotX * spread, -slotY * spread, 0.0f);
+                    itemSlot.transform.localPosition = new Vector3(sideStartPosition + slotX * spread, -slotY * spread, 0.0f);
                     itemSlot.gameObject.SetActive(true);
                     itemSlot.UpdateSlot();
                     ++_amountOfActiveSlots;
@@ -136,11 +139,12 @@ namespace ExpandedChestUI.Scripts.Components
         {
             height = Mathf.Min(height, 3 * spread);
             var vector2 = new Vector2(visibleColumns * spread, height);
-            if (backgroundSR is not null) backgroundSR.size = vector2;
-            if (backgroundBlockCollider is not null) backgroundBlockCollider.size = new Vector3(vector2.x, vector2.y, backgroundBlockCollider.size.z);
             if (scrollWindow is null) return;
             scrollWindow.windowWidth = vector2.x;
-            if (backgroundSR is not null) itemSlotsRoot.transform.parent.parent.localPosition = new Vector3(backgroundSR.localBounds.min.x + (spread / 2), backgroundSR.localBounds.max.y - (spread / 2), 0.0f);
+            if (backgroundSR is null) return;
+            backgroundSR.transform.localScale = new Vector3(vector2.x, vector2.y, 1f);
+            itemSlotsRoot.transform.parent.parent.localPosition = new Vector3(0.0f, height / 2, 0.0f);
+            itemSlotsRoot.transform.localPosition = new Vector3(0.0f, - (spread / 2), 0.0f);
         }
 
         private bool SlotsNeedsRefresh()
@@ -203,20 +207,20 @@ namespace ExpandedChestUI.Scripts.Components
 
         private float GetSideStartPosition(int size) => -((size - 1f) / 2f) * spread;
 
-        public new void UpdateContainingElements(float scroll) { }
+        public void UpdateContainingElements(float scroll) { }
 
-        public new bool IsBottomElementSelected()
+        public bool IsBottomElementSelected()
         {
             var selected = Manager.ui.currentSelectedUIElement;
             return selected != null && itemSlots.FindAll(x => x.uiSlotYPosition == (visibleRows - 1)).Exists(x => x == selected);
         }
 
-        public new bool IsTopElementSelected()
+        public bool IsTopElementSelected()
         {
             var selected = Manager.ui.currentSelectedUIElement;
             return selected != null && itemSlots.FindAll(x => x.uiSlotYPosition == 0).Exists(x => x == selected);
         }
 
-        public new float GetCurrentWindowHeight() => Mathf.Max(0f, visibleRows * spread);
+        public float GetCurrentWindowHeight() => Mathf.Max(0f, visibleRows * spread);
     }
 }
