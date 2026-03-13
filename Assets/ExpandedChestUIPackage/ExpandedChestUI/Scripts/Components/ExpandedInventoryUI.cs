@@ -40,7 +40,7 @@ namespace ExpandedChestUI.Scripts.Components
                 scrollWindow.enabled = true;
                 scrollWindow.ResetScroll();
             }
-
+            
             if (Manager.ui.currentSelectedUIElement is not ExpandedInventorySlotUI) return;
             var selectedSlot = (ExpandedInventorySlotUI)Manager.ui.currentSelectedUIElement;
             if (selectedSlot.visibleSlotIndex >= _amountOfActiveSlots)
@@ -53,7 +53,7 @@ namespace ExpandedChestUI.Scripts.Components
             }
             else
             {
-                scrollWindow.MoveScrollToIncludePosition(selectedSlot.localScrollPosition, 0);
+                scrollWindow.MoveScrollToIncludePosition(selectedSlot.localScrollPosition, 0.6875f);
             }
         }
 
@@ -66,7 +66,6 @@ namespace ExpandedChestUI.Scripts.Components
         private void Update()
         {
             if (!isShowing || !autoPositionSlots) return;
-            //UpdateContainerSize();
             TriggerInventoryAchievements();
             if (!SlotsNeedsRefresh()) return;
             MarkSlotsAsDirty();

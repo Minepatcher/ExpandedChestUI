@@ -1,5 +1,4 @@
 using System.Linq;
-using ExpandedChestUI.Scripts.Components;
 using PugMod;
 using UnityEngine;
 
@@ -8,7 +7,7 @@ namespace ExpandedChestUI.Scripts
 {
     public class ExpandedChestUI : IMod
     {
-        public const string Version = "0.3.1";
+        public const string Version = "0.4.0";
         public const string ModID = "ExpandedChestUIMod";
         public const string FriendlyName = "Expanded ChestUI Mod";
         internal static readonly Logger Log = new(FriendlyName);

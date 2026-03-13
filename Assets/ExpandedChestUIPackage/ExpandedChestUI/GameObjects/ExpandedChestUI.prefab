@@ -114,7 +114,7 @@ MonoBehaviour:
   allowScrollWithArrowKeys: 0
   cursorMustBeInsideWindowToScroll: 1
   anyElementMustBeSelectedToScrollWithController: 1
-  padding: 1
+  padding: 0
   autoHideScrollbar: 1
   centerVertically: 0
 --- !u!1 &443694058853190708
