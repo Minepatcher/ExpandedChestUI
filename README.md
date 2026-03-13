@@ -9,8 +9,8 @@ If you want to see this mod in action, check out these other mods!
 # Usage
 For those that wish to use this mod to create their own chests. Add the following code to your dependencies in your manifest.json file.
 ```json
-"ck.modding.corelib": "https://github.com/CoreKeeperMods/CoreLib.git?path=/Assets/CoreLibPackage#4.0.0",
-"ck.modding.expanded-chest-ui": "https://github.com/Minepatcher/ExpandedChestUI.git?path=/Assets/ExpandedChestUIPackage#0.3.0"
+"ck.modding.corelib": "https://github.com/CoreKeeperMods/CoreLib.git?path=/Assets/CoreLibPackage#4.0.2",
+"ck.modding.expanded-chest-ui": "https://github.com/Minepatcher/ExpandedChestUI.git?path=/Assets/ExpandedChestUIPackage#0.4.0"
 ```
 
 > **Warning:** This mod now requires CoreLib for modding, but is not required to be added as a dependency.
