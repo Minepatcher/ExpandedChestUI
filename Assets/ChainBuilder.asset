@@ -14,22 +14,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mods:
   - name: ExpandedChestUI
-    mod: {fileID: 11400000, guid: 5904a8089164bfd4a95892dd11ea3467, type: 2}
+    mod: {fileID: 11400000, guid: 125d415f6ca3f474e9a6a97a9149c494, type: 2}
     shouldBuild: 1
-    version: 0.0.1
+    version: 0.4.0
     originalTags:
-    - 1.1.2
+    - 1.2.0.3
     - Visual
+    - Quality of Life
     - Overhaul
-    otherTags: Visual;Overhaul
-    gameVersionTags: 1.1.2
+    - Client
+    - Script
+    otherTags: Client;Overhaul;Quality of Life;Script;Visual
+    gameVersionTags: 1.2.0.3
   buildAll: 1
-  uploadToModIO: 0
-  updateDescription: 0
-  uploadVersion: 
   allGameVersions: 1.1.2
-  changeLog: 
-  actionPrefix: Building
+  actionPrefix: Fetching
   buildIndex: -1
   isBuilding: 0
-  oldBuildAll: 1

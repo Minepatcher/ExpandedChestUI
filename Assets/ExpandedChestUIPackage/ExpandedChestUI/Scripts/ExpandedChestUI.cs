@@ -1,13 +1,14 @@
 using System.Linq;
+using Inventory;
 using PugMod;
 using UnityEngine;
 
 // ReSharper disable once CheckNamespace
-namespace ExpandedChestUI.Scripts
+namespace ExpandedChestUI
 {
     public class ExpandedChestUI : IMod
     {
-        public const string Version = "0.4.0";
+        public const string Version = "1.0.0";
         public const string ModID = "ExpandedChestUIMod";
         public const string FriendlyName = "Expanded ChestUI Mod";
         internal static readonly Logger Log = new(FriendlyName);
@@ -25,7 +26,10 @@ namespace ExpandedChestUI.Scripts
             ChestUIObject = modInfo.Assets.OfType<GameObject>().FirstOrDefault(x => x.name == "ExpandedChestUI");
         }
 
-        public void Init() { }
+        public void Init()
+        {
+            BurstDisabler.DisableBurstForSystemAndJobs<InventoryUpdateSystem>();
+        }
 
         public void Shutdown() { }
 

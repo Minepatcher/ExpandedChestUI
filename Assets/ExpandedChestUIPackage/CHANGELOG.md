@@ -1,5 +1,20 @@
+### v1.0.0
+- Change the namespace naming convention to be more consistent.
+- Add four new buttons based on @reishyousose's Quality of Core Keeper buttons.
+- Create TextDataBlocks for five buttons for consistent capitalization.
+- Created burst override/disabling for InventoryUpdateSystem to override and create new Inventory Change Actions.
+
+### v0.4.0
+- Use copies of in-game files for textures due to visual differences in the in-game compressed files.
+- In-game texture addresses removed due to mod file size bloating.
+- Scrolling with mouse now scrolls by half the slot height.
+- Controller Support updated to use right thumbstick for scrolling. Allowing user to not have to scroll through the entire chest inventory to get to their player inventory.
+- Fixed Initial item load issue where items with an bars did not show their exp, usage, or reinforcement bars.
+
 ### v0.3.0
-- Enhancement: Update to Core Keeper 1.2
+- Update to Core Keeper 1.2
+- Use new sprites now available on the SDK.
+- Remove unused sprites.
 
 ### v0.2.1
 - Bug Fix: Tool Damage and Pet Exp will now show *still working out an initial load bug, but opening a second chest will fix.

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: ExpandedChestUI_modio
   m_EditorClassIdentifier: 
   modId: 5079247
-  modSettings: {fileID: 11400000, guid: f858c37d04f49884084ae3563e1201ae, type: 2}
+  modSettings: {fileID: 11400000, guid: fea9f27fecde14044afaf572ad676b6b, type: 2}
   logo: {fileID: 2800000, guid: 69d3568e838e0e041b3d6feff8e6833d, type: 3}
   summary: Expanded Chest UI is a mod that replaces the default Chest UI with a more
     expandable/scroll-able UI.

@@ -1,30 +1,27 @@
 # ExpandedChestUI
-This mod replaces the default Core Keeper Chest UI for a more expansive UI that allows for scrolling. **THIS MOD DOES NOTHING ON ITS OWN**, but is rather to help Modders more easily create larger chests. Up to 16x9 Inventory Size.
+Expanded Chest UI is a Core Keeper mod that expands the default Core Keeper Chest UI.
+![ExpandedChestUI](Assets/Images/expanded-chest-ui.gif)
 
-# What mods use this mod?
-If you want to see this mod in action, check out these other mods!
+## What does this mod do?
+- Adds four new buttons to the Chest UI based on @ReishyouSose's [Quality of Core Keeper Mod](https://github.com/ReishyouSose/CoreKeeperMods/tree/1.0/Assets/CoreEnhance).
+    - **_Split Stack_:** Split stacks into single items until the next slot is not empty.
+    - **_Replenish_:** Moves already existing items in your inventory from this chest
+	  to your inventory.
+    - **_Store All_:** Stores all items in the inventory in the chest.
+    - **_Take All_:** Takes all items from the chest into the inventory.
+> **_Note:_** Store All and Take All both ignore the first row in your player inventory.
+> 
+> **_Note 2:_** Quick Stack, Replenish, Store All, and Take All ignore locked items.
+- Upgrades the default Chest Max Size to 16x9. This allows for chests with up to 144 slots with a scrollbar!
+  (**_MODDERS ONLY_**)
+
+## How do I Mod with Expanded Chest UI?
+If you are a modder and want to create a custom chest. You can read the [wiki](https://github.com/Minepatcher/ExpandedChestUI/wiki) for more information.
+
+## What mods use Expanded Chest UI?
+Here's a list of mods that use Expanded Chest UI, check them out!
 - [Double Chest Inventory](https://mod.io/g/corekeeper/m/double-chest-inventory)
 - [Chests Galore](https://mod.io/g/corekeeper/m/chests-galore)
 
-# Usage
-For those that wish to use this mod to create their own chests. Add the following code to your dependencies in your manifest.json file.
-```json
-"ck.modding.corelib": "https://github.com/CoreKeeperMods/CoreLib.git?path=/Assets/CoreLibPackage#4.0.2",
-"ck.modding.expanded-chest-ui": "https://github.com/Minepatcher/ExpandedChestUI.git?path=/Assets/ExpandedChestUIPackage#0.4.0"
-```
-
-> **Warning:** This mod now requires CoreLib for modding, but is not required to be added as a dependency.
-
-Then, add Expanded Chest UI to your Mod's _Mod Builder Setting_ in the project's root folder and press the `Sync asmdef file` button. This will update your asmdef file in your mod folder.
-
-![image](Assets/Images/Mod-Builder-Settings.png)
-![image](Assets/Images/asmdef.png)
-
-
-Everything else for creating your chest is the same as usual, but now you are allowed up to a 16x9 sized chest in the Inventory Authoring of your Chest Enitity Prefab.
-
-![image](Assets/Images/Inventory-Authoring.png)
-
-ENJOY!!!
-
-![ExpandedChestUI](Assets/Images/expanded-chest-ui.gif)
+## Does this mod go in my server?
+- Only if another mod requires it as a dependency, otherwise no. This mod is client-side only.
