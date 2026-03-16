@@ -3,7 +3,7 @@ Expanded Chest UI is a Core Keeper mod that expands the default Core Keeper Ches
 ![ExpandedChestUI](Assets/Images/expanded-chest-ui.gif)
 
 ## What does this mod do?
-- Adds four new buttons to the Chest UI based on @ReishyouSose's [Quality of Core Keeper Mod](https://github.com/ReishyouSose/CoreKeeperMods/tree/1.0/Assets/CoreEnhance).
+- Adds four new buttons to the Chest UI based on [Quality of Core Keeper Mod](https://github.com/ReishyouSose/CoreKeeperMods/tree/1.0/Assets/CoreEnhance).
     - **_Split Stack_:** Split stacks into single items until the next slot is not empty.
     - **_Replenish_:** Moves already existing items in your inventory from this chest
 	  to your inventory.
