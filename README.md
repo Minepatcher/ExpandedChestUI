@@ -23,5 +23,8 @@ Here's a list of mods that use Expanded Chest UI, check them out!
 - [Double Chest Inventory](https://mod.io/g/corekeeper/m/double-chest-inventory)
 - [Chests Galore](https://mod.io/g/corekeeper/m/chests-galore)
 
+## Does this mod have controller support?
+Yes! This mod has full controller support.
+
 ## Does this mod go in my server?
 - Only if another mod requires it as a dependency, otherwise no. This mod is client-side only.
