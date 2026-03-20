@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6204696807950514790}
-  - component: {fileID: 427435178945948005}
+  - component: {fileID: 1885461984487087166}
   - component: {fileID: 6886923514696475948}
   m_Layer: 5
   m_Name: QuickStackToInventoryButton
@@ -34,7 +34,7 @@ Transform:
   - {fileID: 8715924137174173989}
   m_Father: {fileID: 8492266701293799893}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &427435178945948005
+--- !u!114 &1885461984487087166
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -43,15 +43,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 301525629218622786}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: -1748679033, guid: 548e3dd2d27c1e2d0bdf82f0889cb8a7, type: 3}
+  m_Script: {fileID: 11500000, guid: 3b89740c3e214b6d98d0c8939b563ba2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   topUIElements:
-  - {fileID: 8763610830981011993}
+  - {fileID: 4080558062136924131}
   bottomUIElements:
-  - {fileID: 3614857347048320871}
+  - {fileID: 1239816566681888875}
   leftUIElements:
-  - {fileID: 3820423020001120450}
+  - {fileID: 1740259606703828703}
   rightUIElements: []
   childElements: []
   selectFirstEnabledElementInList: 0
@@ -68,7 +68,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 4908264272393638134}
-        m_TargetAssemblyTypeName: ExpandedChestUI.Scripts.Components.ExpandedInventoryUI,
+        m_TargetAssemblyTypeName: ExpandedChestUI.Component.ExpandedInventoryUI,
           ExpandedChestUI
         m_MethodName: QuickStackToInventory
         m_Mode: 1
@@ -112,13 +112,14 @@ MonoBehaviour:
     mRTL_MaxLineLength: 0
     mRTL_ConvertNumbers: 0
     m_DontLocalizeParameters: 0
-  optionalShortCut: 0
+  optionalShortCut: 2
   adjustSpritesToFitTextSize: 0
   spritesSizePadding: {x: 0, y: 0}
   text: {fileID: 0}
   playClickSoundEffect: 0
-  clickSoundEffect: -2145974506
+  clickSoundEffect: 0
   clickSoundPitch: 0
+  optionalShortCutModifier: 1
 --- !u!65 &6886923514696475948
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -190,9 +191,9 @@ MonoBehaviour:
   bottomUIElements: []
   leftUIElements: []
   rightUIElements:
-  - {fileID: 6981124740979014511}
-  - {fileID: 3820423020001120450}
-  - {fileID: 4822772955426589865}
+  - {fileID: 782602814995762218}
+  - {fileID: 1740259606703828703}
+  - {fileID: 4657809773857187339}
   childElements: []
   selectFirstEnabledElementInList: 0
   invokeSelectionEvents: 0
@@ -220,11 +221,12 @@ MonoBehaviour:
   additionalBackgroundSRs: []
   scrollWindow: {fileID: 5871516513338901833}
   dontShowLockedIcon: 1
-  optionalQuickStackButton: {fileID: 3820423020001120450}
-  optionalSortButton: {fileID: 6981124740979014511}
-  optionalToInventoryButton: {fileID: 427435178945948005}
-  optionalPutAllButton: {fileID: 4822772955426589865}
-  optionalTakeAllButton: {fileID: 3614857347048320871}
+  optionalSortButton: {fileID: 782602814995762218}
+  optionalQuickStackButton: {fileID: 1740259606703828703}
+  optionalPutAllButton: {fileID: 4657809773857187339}
+  optionalSplitStackButton: {fileID: 4080558062136924131}
+  optionalToInventoryButton: {fileID: 1885461984487087166}
+  optionalTakeAllButton: {fileID: 1239816566681888875}
   root: {fileID: 1474595003434133660}
   maxColumns: 16
   maxRows: 9
@@ -809,7 +811,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7326322427147102339}
-  - component: {fileID: 8763610830981011993}
+  - component: {fileID: 4080558062136924131}
   - component: {fileID: 419853020293136017}
   m_Layer: 5
   m_Name: SplitStackButton
@@ -834,7 +836,7 @@ Transform:
   - {fileID: 9095815631766006656}
   m_Father: {fileID: 8492266701293799893}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8763610830981011993
+--- !u!114 &4080558062136924131
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -843,14 +845,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 1263123370612095678}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: -1748679033, guid: 548e3dd2d27c1e2d0bdf82f0889cb8a7, type: 3}
+  m_Script: {fileID: 11500000, guid: 3b89740c3e214b6d98d0c8939b563ba2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   topUIElements: []
   bottomUIElements:
-  - {fileID: 427435178945948005}
+  - {fileID: 1885461984487087166}
   leftUIElements:
-  - {fileID: 6981124740979014511}
+  - {fileID: 782602814995762218}
   rightUIElements: []
   childElements: []
   selectFirstEnabledElementInList: 0
@@ -911,13 +913,14 @@ MonoBehaviour:
     mRTL_MaxLineLength: 0
     mRTL_ConvertNumbers: 0
     m_DontLocalizeParameters: 0
-  optionalShortCut: 0
+  optionalShortCut: 1
   adjustSpritesToFitTextSize: 0
   spritesSizePadding: {x: 0, y: 0}
   text: {fileID: 0}
   playClickSoundEffect: 0
-  clickSoundEffect: -2145974506
+  clickSoundEffect: 0
   clickSoundPitch: 0
+  optionalShortCutModifier: 1
 --- !u!65 &419853020293136017
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1336,7 +1339,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2476154231039217993}
-  - component: {fileID: 6981124740979014511}
+  - component: {fileID: 782602814995762218}
   - component: {fileID: 1486290913566318706}
   m_Layer: 5
   m_Name: SortButton
@@ -1361,7 +1364,7 @@ Transform:
   - {fileID: 4820575933043857691}
   m_Father: {fileID: 8492266701293799893}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6981124740979014511
+--- !u!114 &782602814995762218
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1370,16 +1373,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 2144664517301786940}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: -1748679033, guid: 548e3dd2d27c1e2d0bdf82f0889cb8a7, type: 3}
+  m_Script: {fileID: 11500000, guid: 3b89740c3e214b6d98d0c8939b563ba2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   topUIElements: []
   bottomUIElements:
-  - {fileID: 3820423020001120450}
+  - {fileID: 1740259606703828703}
   leftUIElements:
   - {fileID: 4908264272393638134}
   rightUIElements:
-  - {fileID: 8763610830981011993}
+  - {fileID: 4080558062136924131}
   childElements: []
   selectFirstEnabledElementInList: 0
   invokeSelectionEvents: 0
@@ -1438,13 +1441,14 @@ MonoBehaviour:
     mRTL_MaxLineLength: 0
     mRTL_ConvertNumbers: 0
     m_DontLocalizeParameters: 0
-  optionalShortCut: 0
+  optionalShortCut: 1
   adjustSpritesToFitTextSize: 0
   spritesSizePadding: {x: 0, y: 0}
   text: {fileID: 0}
   playClickSoundEffect: 0
-  clickSoundEffect: -2145974506
+  clickSoundEffect: 0
   clickSoundPitch: 0
+  optionalShortCutModifier: 0
 --- !u!65 &1486290913566318706
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1823,7 +1827,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8246759401045926717}
-  - component: {fileID: 4822772955426589865}
+  - component: {fileID: 4657809773857187339}
   - component: {fileID: 611658077121424574}
   m_Layer: 5
   m_Name: PutAllButton
@@ -1848,7 +1852,7 @@ Transform:
   - {fileID: 8016233593293703038}
   m_Father: {fileID: 8492266701293799893}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4822772955426589865
+--- !u!114 &4657809773857187339
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1857,16 +1861,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 3572082232912412074}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: -1748679033, guid: 548e3dd2d27c1e2d0bdf82f0889cb8a7, type: 3}
+  m_Script: {fileID: 11500000, guid: 3b89740c3e214b6d98d0c8939b563ba2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   topUIElements:
-  - {fileID: 3820423020001120450}
+  - {fileID: 1740259606703828703}
   bottomUIElements: []
   leftUIElements:
   - {fileID: 4908264272393638134}
   rightUIElements:
-  - {fileID: 3614857347048320871}
+  - {fileID: 1239816566681888875}
   childElements: []
   selectFirstEnabledElementInList: 0
   invokeSelectionEvents: 0
@@ -1926,13 +1930,14 @@ MonoBehaviour:
     mRTL_MaxLineLength: 0
     mRTL_ConvertNumbers: 0
     m_DontLocalizeParameters: 0
-  optionalShortCut: 0
+  optionalShortCut: 1
   adjustSpritesToFitTextSize: 0
   spritesSizePadding: {x: 0, y: 0}
   text: {fileID: 0}
   playClickSoundEffect: 0
-  clickSoundEffect: -2145974506
+  clickSoundEffect: 0
   clickSoundPitch: 0
+  optionalShortCutModifier: 2
 --- !u!65 &611658077121424574
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2347,7 +2352,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 176977771208369749}
-  - component: {fileID: 3614857347048320871}
+  - component: {fileID: 1239816566681888875}
   - component: {fileID: 8130338386072871598}
   m_Layer: 5
   m_Name: TakeAllButton
@@ -2372,7 +2377,7 @@ Transform:
   - {fileID: 6646094916021582054}
   m_Father: {fileID: 8492266701293799893}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3614857347048320871
+--- !u!114 &1239816566681888875
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2381,14 +2386,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 4381323562028162774}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: -1748679033, guid: 548e3dd2d27c1e2d0bdf82f0889cb8a7, type: 3}
+  m_Script: {fileID: 11500000, guid: 3b89740c3e214b6d98d0c8939b563ba2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   topUIElements:
-  - {fileID: 427435178945948005}
+  - {fileID: 1885461984487087166}
   bottomUIElements: []
   leftUIElements:
-  - {fileID: 4822772955426589865}
+  - {fileID: 4657809773857187339}
   rightUIElements: []
   childElements: []
   selectFirstEnabledElementInList: 0
@@ -2449,13 +2454,14 @@ MonoBehaviour:
     mRTL_MaxLineLength: 0
     mRTL_ConvertNumbers: 0
     m_DontLocalizeParameters: 0
-  optionalShortCut: 0
+  optionalShortCut: 2
   adjustSpritesToFitTextSize: 0
   spritesSizePadding: {x: 0, y: 0}
   text: {fileID: 0}
   playClickSoundEffect: 0
-  clickSoundEffect: -2145974506
+  clickSoundEffect: 0
   clickSoundPitch: 0
+  optionalShortCutModifier: 2
 --- !u!65 &8130338386072871598
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -3987,7 +3993,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1692675618424282634}
-  - component: {fileID: 3820423020001120450}
+  - component: {fileID: 1740259606703828703}
   - component: {fileID: 4421996074035600175}
   m_Layer: 5
   m_Name: QuickStackButton
@@ -4012,7 +4018,7 @@ Transform:
   - {fileID: 2112540729178695999}
   m_Father: {fileID: 8492266701293799893}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3820423020001120450
+--- !u!114 &1740259606703828703
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -4021,17 +4027,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 8313450084591973143}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: -1748679033, guid: 548e3dd2d27c1e2d0bdf82f0889cb8a7, type: 3}
+  m_Script: {fileID: 11500000, guid: 3b89740c3e214b6d98d0c8939b563ba2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   topUIElements:
-  - {fileID: 6981124740979014511}
+  - {fileID: 782602814995762218}
   bottomUIElements:
-  - {fileID: 4822772955426589865}
+  - {fileID: 4657809773857187339}
   leftUIElements:
   - {fileID: 4908264272393638134}
   rightUIElements:
-  - {fileID: 427435178945948005}
+  - {fileID: 1885461984487087166}
   childElements: []
   selectFirstEnabledElementInList: 0
   invokeSelectionEvents: 0
@@ -4091,13 +4097,14 @@ MonoBehaviour:
     mRTL_MaxLineLength: 0
     mRTL_ConvertNumbers: 0
     m_DontLocalizeParameters: 0
-  optionalShortCut: 0
+  optionalShortCut: 2
   adjustSpritesToFitTextSize: 0
   spritesSizePadding: {x: 0, y: 0}
   text: {fileID: 0}
   playClickSoundEffect: 0
-  clickSoundEffect: -2145974506
+  clickSoundEffect: 0
   clickSoundPitch: 0
+  optionalShortCutModifier: 0
 --- !u!65 &4421996074035600175
 BoxCollider:
   m_ObjectHideFlags: 0

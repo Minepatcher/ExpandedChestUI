@@ -6,9 +6,9 @@ using UnityEngine;
 // ReSharper disable once CheckNamespace
 namespace ExpandedChestUI
 {
-    public class ExpandedChestUI : IMod
+    public class ExpandedChestUIMod : IMod
     {
-        public const string Version = "1.0.0";
+        public const string Version = "1.1.0";
         public const string ModID = "ExpandedChestUIMod";
         public const string FriendlyName = "Expanded ChestUI Mod";
         internal static readonly Logger Log = new(FriendlyName);
@@ -26,10 +26,7 @@ namespace ExpandedChestUI
             ChestUIObject = modInfo.Assets.OfType<GameObject>().FirstOrDefault(x => x.name == "ExpandedChestUI");
         }
 
-        public void Init()
-        {
-            BurstDisabler.DisableBurstForSystemAndJobs<InventoryUpdateSystem>();
-        }
+        public void Init() { }
 
         public void Shutdown() { }
 

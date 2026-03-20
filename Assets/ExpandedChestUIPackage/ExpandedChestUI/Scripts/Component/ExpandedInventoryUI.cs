@@ -1,8 +1,9 @@
 #define PUG_ACHIEVEMENTS
 
+using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using Inventory;
+using ExpandedChestUI.Scripts.System;
 using UnityEngine;
 
 // ReSharper disable once CheckNamespace
@@ -10,10 +11,12 @@ namespace ExpandedChestUI.Component
 {
     public class ExpandedInventoryUI : ItemSlotsUIContainer, IScrollable
     {
-        [Header("Expanded Inventory UI")] public ButtonUIElement optionalQuickStackButton;
+        [Header("Expanded Inventory UI")] 
         public ButtonUIElement optionalSortButton;
-        public ButtonUIElement optionalToInventoryButton;
+        public ButtonUIElement optionalQuickStackButton;
         public ButtonUIElement optionalPutAllButton;
+        public ButtonUIElement optionalSplitStackButton;
+        public ButtonUIElement optionalToInventoryButton;
         public ButtonUIElement optionalTakeAllButton;
         public GameObject root;
         private GameObject Root => root;
@@ -29,6 +32,7 @@ namespace ExpandedChestUI.Component
         public override int MAX_ROWS => maxRows;
 
         private static PlayerController Player => Manager.main.player;
+        private ExpandedChestActionsClient _extraActionsClient;
 
         protected override void Awake()
         {
@@ -39,6 +43,7 @@ namespace ExpandedChestUI.Component
         public override void ShowContainerUI()
         {
             Root.SetActive(true);
+            if(world != null) _extraActionsClient = world.GetOrCreateSystemManaged<ExpandedChestActionsClient>();
             UpdateContainerSize();
             itemSlotsRoot.gameObject.SetActive(true);
             if (scrollWindow != null)
@@ -259,19 +264,9 @@ namespace ExpandedChestUI.Component
             var inventoryHandler = GetInventoryHandler();
             var player = Player;
             if (inventoryHandler is null || player is null) return;
-            var playerInventoryHandler = player.playerInventoryHandler;
-            player.QueueInputAction(new UIInputActionData
-            {
-                action = UIInputAction.InventoryChange,
-                inventoryChangeData = new InventoryChangeData
-                {
-                    inventoryAction = (InventoryAction)1000,
-                    inventory1 = playerInventoryHandler.inventoryEntity,
-                    entityOrInventory2 = inventoryHandler.inventoryEntity,
-                    bool1 = true,
-                    bool2 = false,
-                }
-            });
+            _extraActionsClient = world.GetOrCreateSystemManaged<ExpandedChestActionsClient>();
+            var playerInventoryEntity = player.playerInventoryHandler.inventoryEntity;
+            _extraActionsClient.MoveAllInventoryItems(playerInventoryEntity, inventoryHandler.inventoryEntity, true);
             AudioManager.Sfx(SfxTableID.inventorySFXSort, transform.position);
         }
 
@@ -280,19 +275,8 @@ namespace ExpandedChestUI.Component
             var inventoryHandler = GetInventoryHandler();
             var player = Player;
             if (inventoryHandler is null || player is null) return;
-            var playerInventoryHandler = player.playerInventoryHandler;
-            player.QueueInputAction(new UIInputActionData
-            {
-                action = UIInputAction.InventoryChange,
-                inventoryChangeData = new InventoryChangeData
-                {
-                    inventoryAction = (InventoryAction)1000,
-                    inventory1 = inventoryHandler.inventoryEntity,
-                    entityOrInventory2 = playerInventoryHandler.inventoryEntity,
-                    bool1 = false,
-                    bool2 = true
-                }
-            });
+            var playerInventoryEntity = player.playerInventoryHandler.inventoryEntity;
+            _extraActionsClient.MoveAllInventoryItems(inventoryHandler.inventoryEntity, playerInventoryEntity, isToPlayerInventory: true);
             AudioManager.Sfx(SfxTableID.inventorySFXSort, transform.position);
         }
 
@@ -301,15 +285,7 @@ namespace ExpandedChestUI.Component
             var inventoryHandler = GetInventoryHandler();
             var player = Player;
             if (inventoryHandler is null || player is null) return;
-            player.QueueInputAction(new UIInputActionData
-            {
-                action = UIInputAction.InventoryChange,
-                inventoryChangeData = new InventoryChangeData
-                {
-                    inventoryAction = (InventoryAction)1001,
-                    inventory1 = inventoryHandler.inventoryEntity
-                }
-            });
+            _extraActionsClient.SplitInventoryStacks(inventoryHandler.inventoryEntity);
             AudioManager.Sfx(SfxTableID.inventorySFXSort, transform.position);
         }
     }

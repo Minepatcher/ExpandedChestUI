@@ -1,3 +1,9 @@
+### v1.1.0
+- Added a new ExpandedButtonUIElement component to allow for custom button UI.
+- Added Shortcut Keys and their implementation to each of the chest buttons.
+- Removed BurstDisabler from InventoryUpdateSystem.
+- Added New PugSimulationSystemBase to handle the creation of new Inventory Change Actions.
+
 ### v1.0.0
 - Change the namespace naming convention to be more consistent.
 - Add four new buttons based on @reishyousose's Quality of Core Keeper buttons.

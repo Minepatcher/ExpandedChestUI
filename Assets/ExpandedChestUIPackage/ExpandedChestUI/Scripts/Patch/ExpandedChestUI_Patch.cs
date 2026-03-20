@@ -57,10 +57,10 @@ namespace ExpandedChestUI.Patch
             var uiTransform = __instance.playerInventoryUI.transform.parent;
             var playerInvUI = __instance.playerInventoryUI;
             var chestInventoryUI = __instance.chestInventoryUI;
-            var newInventoryUI = ExpandedChestUI.ChestUIObject.GetComponent<ExpandedInventoryUI>();
+            var newInventoryUI = ExpandedChestUIMod.ChestUIObject.GetComponent<ExpandedInventoryUI>();
             if (newInventoryUI == null)
             {
-                ExpandedChestUI.Log.LogError($"{ExpandedChestUI.FriendlyName} failed to find ChestUI");
+                ExpandedChestUIMod.Log.LogError($"{ExpandedChestUIMod.FriendlyName} failed to find ChestUI");
                 return;
             }
 
@@ -80,65 +80,7 @@ namespace ExpandedChestUI.Patch
             playerInvUI.topUIElements.Add(newInventoryUI.optionalTakeAllButton);
             playerInvUI.topUIElements.Add(newInventoryUI);
 
-            ExpandedChestUI.Log.LogInfo($"{ExpandedChestUI.FriendlyName} loaded successfully");
-        }
-
-        [HarmonyPatch("InventoryUpdateSystem", "ProcessInventoryChange")]
-        [HarmonyPrefix]
-        [SuppressMessage("ReSharper", "PossiblyImpureMethodCallOnReadonlyVariable")]
-        [SuppressMessage("ReSharper", "InconsistentNaming")]
-        [SuppressMessage("ReSharper", "SwitchStatementHandlesSomeKnownEnumValuesWithDefault")]
-        [SuppressMessage("ReSharper", "SwitchStatementMissingSomeEnumCasesNoDefault")]
-        private static bool ProcessInventoryChange_Prefix(ref bool __result,
-            InventoryChangeData rpc,
-            in InventoryHandlerShared inventoryHandlerShared)
-        {
-            if (rpc is not { inventoryAction: >= (InventoryAction)1000 }) return true;
-            if (rpc.inventory1 == Entity.Null)
-            {
-                Debug.LogError("Got null inventory, are you sure it has a GhostComponent?");
-                __result = false;
-                return false;
-            }
-
-            if (!inventoryHandlerShared.vendingMachineLookup.HasComponent(rpc.inventory1) &&
-                (!inventoryHandlerShared.inventoryLookup.HasBuffer(rpc.inventory1) ||
-                 !inventoryHandlerShared.containedObjectsBufferLookup.HasBuffer(rpc.inventory1)))
-            {
-                __result = false;
-                return false;
-            }
-
-            switch (rpc.inventoryAction)
-            {
-                case (InventoryAction)1000:
-                    if (!inventoryHandlerShared.inventoryLookup.HasBuffer(rpc.entityOrInventory2) ||
-                        !inventoryHandlerShared.containedObjectsBufferLookup.HasBuffer(rpc.entityOrInventory2))
-                        return false;
-                    break;
-            }
-
-            switch (rpc.inventoryAction)
-            {
-                case (InventoryAction)1000:
-                    if (rpc.bool2) ExpandedInventoryUtility.IsPlayerInventory = true;
-                    ExpandedInventoryUtility.MoveAllItems(in inventoryHandlerShared, rpc.inventory1,
-                        rpc.entityOrInventory2, rpc.bool1);
-                    goto default;
-                case (InventoryAction)1001:
-                    ExpandedInventoryUtility.SplitStack(in inventoryHandlerShared, rpc.inventory1);
-                    goto default;
-                default:
-                    ExpandedInventoryUtility.UpdateInventorySpace(in inventoryHandlerShared, rpc.inventory1);
-                    if (rpc.entityOrInventory2 != Entity.Null)
-                        ExpandedInventoryUtility.UpdateInventorySpace(in inventoryHandlerShared,
-                            rpc.entityOrInventory2);
-                    __result = true;
-                    break;
-            }
-
-            ExpandedInventoryUtility.IsPlayerInventory = false;
-            return false;
+            ExpandedChestUIMod.Log.LogInfo($"{ExpandedChestUIMod.FriendlyName} loaded successfully");
         }
 
         [HarmonyPatch(typeof(InventoryUtility), "TryFindSlotToAddTo")]
@@ -154,6 +96,7 @@ namespace ExpandedChestUI.Patch
             int variation,
             bool isQuickStacking = false)
         {
+            if (!ExpandedInventoryUtility.IsPlayerInventory) return true;
             var inventoryBuffer1 = inventoryHandlerShared.inventoryLookup[inventoryEntity];
             var inventorySlotsRequirements =
                 inventoryHandlerShared.inventorySlotRequirementBufferLookup[inventoryEntity];
@@ -211,7 +154,7 @@ namespace ExpandedChestUI.Patch
                 {
                     if (flag1 & isQuickStacking)
                         flag2 = (index != 0 || checkSpecificIndexOnly >= 10) && isQuickStacking;
-                    if ((isQuickStacking & buffer && dynamicBuffer2[checkSpecificIndexOnly].Value) ||
+                    if (isQuickStacking & buffer && dynamicBuffer2[checkSpecificIndexOnly].Value ||
                         !InventoryUtility.ObjectIsValidToPutInInventory(inventorySlotsRequirements, objectTagCD,
                             objectID, inventoryBuffer1, inventoryHandlerShared.overrideAlwaysAllowToBeTrashedLookup,
                             out int indexFulfillingRequirements, inventoryHandlerShared.databaseBankCD,
@@ -240,8 +183,71 @@ namespace ExpandedChestUI.Patch
                 }
             }
 
-            __result = (num2 == -1 ? num1 : num2);
+            __result = num2 == -1 ? num1 : num2;
             return false;
+        }
+
+        [HarmonyPatch(typeof(PlayerController), "UpdateInventoryStuff")]
+        [HarmonyPrefix]
+        [SuppressMessage("ReSharper", "InconsistentNaming")]
+        private static bool UpdateInventoryStuff_Prefix(PlayerController __instance)
+        {
+            if (__instance.activeInventoryHandler == null ||
+                __instance.activeInventoryHandler == __instance.playerInventoryHandler ||
+                __instance.activeInventoryHandler != Manager.ui.chestInventoryUI.GetInventoryHandler()
+                )
+                return true;
+            bool returnToMethod = false;
+            if ((__instance.inputModule.PrefersKeyboardAndMouse() &&
+                 __instance.inputModule.IsButtonCurrentlyDown(PlayerInput.InputType.HOT_BAR_SWAP_MODIFIER) ||
+                 !__instance.inputModule.PrefersKeyboardAndMouse() &&
+                 __instance.inputModule.IsButtonCurrentlyDown(PlayerInput.InputType.QUICK_MOVE_ITEMS)) &&
+                __instance.inputModule.WasButtonPressedDownThisFrame(PlayerInput.InputType.QUICK_STACK))
+            {
+                ((ExpandedInventoryUI)Manager.ui.chestInventoryUI).TakeAll();
+            }
+            else if ((__instance.inputModule.PrefersKeyboardAndMouse() &&
+                      __instance.inputModule.IsButtonCurrentlyDown(PlayerInput.InputType.HOT_BAR_SWAP_MODIFIER) ||
+                      !__instance.inputModule.PrefersKeyboardAndMouse() &&
+                      __instance.inputModule.IsButtonCurrentlyDown(PlayerInput.InputType.QUICK_MOVE_ITEMS)) &&
+                     __instance.inputModule.WasButtonPressedDownThisFrame(PlayerInput.InputType.SORT))
+            {
+                ((ExpandedInventoryUI)Manager.ui.chestInventoryUI).PutAll();
+            }
+            else if ((__instance.inputModule.PrefersKeyboardAndMouse() &&
+                      __instance.inputModule.IsButtonCurrentlyDown(PlayerInput.InputType.QUICK_MOVE_ITEMS) ||
+                      !__instance.inputModule.PrefersKeyboardAndMouse() &&
+                      __instance.inputModule.IsButtonCurrentlyDown(PlayerInput.InputType.DROP_SELECTED_ITEM)) &&
+                     __instance.inputModule.WasButtonPressedDownThisFrame(PlayerInput.InputType.SORT))
+            {
+                ((ExpandedInventoryUI)Manager.ui.chestInventoryUI).SplitStack();
+            }
+            else if ((__instance.inputModule.PrefersKeyboardAndMouse() &&
+                      __instance.inputModule.IsButtonCurrentlyDown(PlayerInput.InputType.QUICK_MOVE_ITEMS) ||
+                      !__instance.inputModule.PrefersKeyboardAndMouse() &&
+                      __instance.inputModule.IsButtonCurrentlyDown(PlayerInput.InputType.DROP_SELECTED_ITEM)) &&
+                     __instance.inputModule.WasButtonPressedDownThisFrame(PlayerInput.InputType.QUICK_STACK))
+            {
+                ((ExpandedInventoryUI)Manager.ui.chestInventoryUI).QuickStackToInventory();
+            }
+            else if (__instance.inputModule.WasButtonPressedDownThisFrame(PlayerInput.InputType.QUICK_STACK))
+            {
+                ((ExpandedInventoryUI)Manager.ui.chestInventoryUI).QuickStack();
+            }
+            else if (Manager.ui.currentSelectedUIElement != null && Manager.ui.currentSelectedUIElement.GetComponentInParent(typeof(ExpandedInventoryUI)) && __instance.inputModule.WasButtonPressedDownThisFrame(PlayerInput.InputType.SORT))
+            {
+                ((ExpandedInventoryUI)Manager.ui.chestInventoryUI).Sort();
+            }
+            else if (__instance.inputModule.WasButtonPressedDownThisFrame(PlayerInput.InputType.SORT))
+            {
+                ((InventoryUI)Manager.ui.playerInventoryUI).Sort();
+            }
+            else
+            {
+                returnToMethod = true;
+            }
+
+            return returnToMethod;
         }
     }
 }

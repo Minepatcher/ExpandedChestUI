@@ -60,11 +60,12 @@ namespace ExpandedChestUI.Util
 
         [SuppressMessage("ReSharper", "PossiblyImpureMethodCallOnReadonlyVariable")]
         public static void MoveAllItems(in InventoryHandlerShared inventoryHandlerShared, Entity inventoryFrom,
-            Entity inventoryTo, bool isFromPlayerInventory)
+            Entity inventoryTo, bool isFromPlayerInventory, bool isToPlayerInventory)
         {
             if (InventoryUtility.CheckIfCanOnlyContainOneItemPerSlot(
                     inventoryHandlerShared.inventoryLookup[inventoryTo]))
                 return;
+            if (isToPlayerInventory) IsPlayerInventory = true;
             bool buffer =
                 inventoryHandlerShared.lockedObjectsBufferLookup.TryGetBuffer(inventoryFrom, out var dynamicBuffer1);
             var inventoryBuffer1 = inventoryHandlerShared.inventoryLookup[inventoryFrom];
@@ -84,6 +85,7 @@ namespace ExpandedChestUI.Util
                             -1, -1, isQuickStacking: true);
                 }
             }
+            IsPlayerInventory = false;
         }
 
         [SuppressMessage("ReSharper", "PossiblyImpureMethodCallOnReadonlyVariable")]

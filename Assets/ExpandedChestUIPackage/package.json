@@ -1,7 +1,7 @@
 {
   "name": "ck.modding.expanded-chest-ui",
   "author":"Minepatcher",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "displayName":"Expanded Chest UI",
   "unity": "6000.0",
   "category": "Modding",
