@@ -2,12 +2,12 @@
 %TAG !u! tag:unity3d.com,2011:
 --- !u!74 &7400000
 AnimationClip:
-  serializedVersion: 7
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: slotTypeHighlightEffect
+  serializedVersion: 7
   m_Legacy: 0
   m_Compressed: 0
   m_UseHighQualityCurve: 1
@@ -21,13 +21,13 @@ AnimationClip:
   - serializedVersion: 2
     curve:
     - time: 0
-      value: {fileID: 21300000, guid: 3d9ae076a4663b5419ff9bee9893a41f, type: 2}
+      value: {fileID: 21300000, guid: c088243082abb2e49a229a09459deb3b, type: 3}
     - time: 0.41666666
-      value: {fileID: 21300000, guid: 49664643aa45963439e99971b3980ed7, type: 2}
+      value: {fileID: 21300000, guid: c088243082abb2e49a229a09459deb3b, type: 3}
     - time: 0.85
-      value: {fileID: 21300000, guid: 3d9ae076a4663b5419ff9bee9893a41f, type: 2}
+      value: {fileID: 21300000, guid: c088243082abb2e49a229a09459deb3b, type: 3}
     attribute: m_Sprite
-    path:
+    path: 
     classID: 212
     script: {fileID: 0}
     flags: 2
@@ -48,9 +48,9 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     pptrCurveMapping:
-    - {fileID: 21300000, guid: 3d9ae076a4663b5419ff9bee9893a41f, type: 2}
-    - {fileID: 21300000, guid: 49664643aa45963439e99971b3980ed7, type: 2}
-    - {fileID: 21300000, guid: 3d9ae076a4663b5419ff9bee9893a41f, type: 2}
+    - {fileID: 21300000, guid: c088243082abb2e49a229a09459deb3b, type: 3}
+    - {fileID: 21300000, guid: c088243082abb2e49a229a09459deb3b, type: 3}
+    - {fileID: 21300000, guid: c088243082abb2e49a229a09459deb3b, type: 3}
   m_AnimationClipSettings:
     serializedVersion: 2
     m_AdditiveReferencePoseClip: {fileID: 0}

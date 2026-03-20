@@ -1,6 +1,5 @@
 #define PUG_ACHIEVEMENTS
 
-using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using ExpandedChestUI.Scripts.System;
@@ -32,7 +31,6 @@ namespace ExpandedChestUI.Component
         public override int MAX_ROWS => maxRows;
 
         private static PlayerController Player => Manager.main.player;
-        private ExpandedChestActionsClient _extraActionsClient;
 
         protected override void Awake()
         {
@@ -43,7 +41,6 @@ namespace ExpandedChestUI.Component
         public override void ShowContainerUI()
         {
             Root.SetActive(true);
-            if(world != null) _extraActionsClient = world.GetOrCreateSystemManaged<ExpandedChestActionsClient>();
             UpdateContainerSize();
             itemSlotsRoot.gameObject.SetActive(true);
             if (scrollWindow != null)
@@ -225,9 +222,7 @@ namespace ExpandedChestUI.Component
 
         private float GetSideStartPosition(int size) => -((size - 1f) / 2f) * spread;
 
-        public void UpdateContainingElements(float scroll)
-        {
-        }
+        public void UpdateContainingElements(float scroll) { }
 
         public bool IsBottomElementSelected()
         {
@@ -253,39 +248,34 @@ namespace ExpandedChestUI.Component
         public void QuickStackToInventory()
         {
             var inventoryHandler = GetInventoryHandler();
-            var player = Player;
-            if (inventoryHandler is null || player is null) return;
-            inventoryHandler.QuickStack(player, player.playerInventoryHandler);
+            if (inventoryHandler is null || Player is null) return;
+            inventoryHandler.QuickStack(Player, Player.playerInventoryHandler);
             AudioManager.Sfx(SfxTableID.inventorySFXSort, transform.position);
         }
 
         public void PutAll()
         {
             var inventoryHandler = GetInventoryHandler();
-            var player = Player;
-            if (inventoryHandler is null || player is null) return;
-            _extraActionsClient = world.GetOrCreateSystemManaged<ExpandedChestActionsClient>();
-            var playerInventoryEntity = player.playerInventoryHandler.inventoryEntity;
-            _extraActionsClient.MoveAllInventoryItems(playerInventoryEntity, inventoryHandler.inventoryEntity, true);
+            if (inventoryHandler is null || Player is null) return;
+            var playerInventoryEntity = Player.playerInventoryHandler.inventoryEntity;
+            ExpandedChestActionsClient.MoveAllInventoryItems(playerInventoryEntity, inventoryHandler.inventoryEntity, true);
             AudioManager.Sfx(SfxTableID.inventorySFXSort, transform.position);
         }
 
         public void TakeAll()
         {
             var inventoryHandler = GetInventoryHandler();
-            var player = Player;
-            if (inventoryHandler is null || player is null) return;
-            var playerInventoryEntity = player.playerInventoryHandler.inventoryEntity;
-            _extraActionsClient.MoveAllInventoryItems(inventoryHandler.inventoryEntity, playerInventoryEntity, isToPlayerInventory: true);
+            if (inventoryHandler is null || Player is null) return;
+            var playerInventoryEntity = Player.playerInventoryHandler.inventoryEntity;
+            ExpandedChestActionsClient.MoveAllInventoryItems(inventoryHandler.inventoryEntity, playerInventoryEntity, isToPlayerInventory: true);
             AudioManager.Sfx(SfxTableID.inventorySFXSort, transform.position);
         }
 
         public void SplitStack()
         {
             var inventoryHandler = GetInventoryHandler();
-            var player = Player;
-            if (inventoryHandler is null || player is null) return;
-            _extraActionsClient.SplitInventoryStacks(inventoryHandler.inventoryEntity);
+            if (inventoryHandler is null || Player is null) return;
+            ExpandedChestActionsClient.SplitInventoryStacks(inventoryHandler.inventoryEntity);
             AudioManager.Sfx(SfxTableID.inventorySFXSort, transform.position);
         }
     }

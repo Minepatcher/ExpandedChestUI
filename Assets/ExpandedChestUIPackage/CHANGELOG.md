@@ -1,3 +1,7 @@
+### v1.1.1
+- Allow static usage of ExpandedChestActionsClient for better performance/usage.
+- Fixed issue where items would not go to the player's inventory.
+
 ### v1.1.0
 - Added a new ExpandedButtonUIElement component to allow for custom button UI.
 - Added Shortcut Keys and their implementation to each of the chest buttons.

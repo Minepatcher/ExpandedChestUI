@@ -1,9 +1,7 @@
 ﻿using Inventory;
-using Rewired.Utils.Attributes;
 using Unity.Collections;
 using Unity.Entities;
 using Unity.NetCode;
-using Unity.Physics;
 using UnityEngine;
 using ExpandedChestUI.Util;
 
@@ -14,30 +12,27 @@ namespace ExpandedChestUI.Scripts.System
     [UpdateInGroup(typeof(InventorySystemGroup))]
     public partial class ExpandedChestActionsClient : PugSimulationSystemBase
     {
+        private static ExpandedChestActionsClient _instance;
         private NativeQueue<ExpandedChestActionRpc> _queue;
         private EntityArchetype _archetype;
-        private BeginSimulationEntityCommandBufferSystem _ecbSystem;
-
-        [Preserve]
+        
         protected override void OnCreate()
         {
+            _instance = this;
             _queue = new NativeQueue<ExpandedChestActionRpc>(Allocator.Persistent);
             _archetype = EntityManager.CreateArchetype(typeof(ExpandedChestActionRpc), typeof(SendRpcCommandRequest));
-            _ecbSystem = World.GetOrCreateSystemManaged<BeginSimulationEntityCommandBufferSystem>();
             base.OnCreate();
         }
-
-        [Preserve]
+        
         protected override void OnDestroy()
         {
             _queue.Dispose();
             base.OnDestroy();
         }
-
-        [Preserve]
+        
         protected override void OnUpdate()
         {
-            var commandBuffer = _ecbSystem.CreateCommandBuffer();
+            var commandBuffer = CreateCommandBuffer();
             while (_queue.TryDequeue(out var rpc1))
             {
                 var entity = commandBuffer.CreateEntity(_archetype);
@@ -46,9 +41,9 @@ namespace ExpandedChestUI.Scripts.System
             base.OnUpdate();
         }
 
-        public void MoveAllInventoryItems(Entity inventoryFrom, Entity inventoryTo, bool isFromPlayerInventory = false, bool isToPlayerInventory = false)
+        public static void MoveAllInventoryItems(Entity inventoryFrom, Entity inventoryTo, bool isFromPlayerInventory = false, bool isToPlayerInventory = false)
         {
-            _queue.Enqueue(new ExpandedChestActionRpc
+            _instance._queue.Enqueue(new ExpandedChestActionRpc
             {
                 Action = ChestAction.MoveInventory,
                 Inventory1 = inventoryFrom,
@@ -58,9 +53,9 @@ namespace ExpandedChestUI.Scripts.System
             });
         }
         
-        public void SplitInventoryStacks(Entity inventory)
+        public static void SplitInventoryStacks(Entity inventory)
         {
-            _queue.Enqueue(new ExpandedChestActionRpc
+            _instance._queue.Enqueue(new ExpandedChestActionRpc
             {
                 Action = ChestAction.Split,
                 Inventory1 = inventory,
@@ -74,23 +69,6 @@ namespace ExpandedChestUI.Scripts.System
     {
         private InventoryHandlerShared _inventoryHandlerShared;
 
-        protected override void OnCreate()
-        {
-            RequireForUpdate<CraftBuffer>();
-            RequireForUpdate<InventoryChangeBuffer>();
-            RequireForUpdate<InventoryAuxDataSystemDataCD>();
-            RequireForUpdate<WorldInfoCD>();
-            RequireForUpdate<PugDatabase.DatabaseBankCD>();
-            RequireForUpdate<BeginSimulationEntityCommandBufferSystem.Singleton>();
-            RequireForUpdate<PhysicsWorldSingleton>();
-            var entity = EntityManager.CreateEntity();
-            EntityManager.AddBuffer<InventoryChangeBuffer>(entity);
-            EntityManager.AddBuffer<CraftBuffer>(entity);
-            EntityManager.AddBuffer<InventoryChangeResultBuffer>(entity);
-            World.GetExistingSystemManaged<PredictedSimulationSystemGroup>().AddSystemToPartialTickUpdate(ref CheckedStateRef);
-            base.OnCreate();
-        }
-
         protected override void OnStartRunning()
         {
             _inventoryHandlerShared = new InventoryHandlerShared(ref CheckedStateRef,
@@ -102,16 +80,18 @@ namespace ExpandedChestUI.Scripts.System
         }
 
         protected override void OnUpdate()
-        { 
+        {
             var ecb = CreateCommandBuffer();
             var shared = _inventoryHandlerShared;
             Entities.WithAll<ExpandedChestActionRpc>().ForEach((Entity e, in ExpandedChestActionRpc rpc) =>
             {
+                
                 if (rpc.Inventory1 == Entity.Null)
                 {
                     Debug.LogError("Got null inventory, are you sure it has a GhostComponent?");
                     return;
                 }
+                
                 if (!shared.vendingMachineLookup.HasComponent(rpc.Inventory1) &&
                     (!shared.inventoryLookup.HasBuffer(rpc.Inventory1) ||
                      !shared.containedObjectsBufferLookup.HasBuffer(rpc.Inventory1)))

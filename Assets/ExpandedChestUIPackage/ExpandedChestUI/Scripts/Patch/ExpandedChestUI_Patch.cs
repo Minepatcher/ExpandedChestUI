@@ -9,7 +9,6 @@ using Inventory;
 using PugMod;
 using Unity.Entities;
 using Unity.Mathematics;
-using UnityEngine;
 using Object = UnityEngine.Object;
 
 // ReSharper disable once CheckNamespace
@@ -27,7 +26,6 @@ namespace ExpandedChestUI.Patch
         private static bool DetectUndiscoveredObjectsInInventory_Prefix(InventoryHandler inventoryHandler,
             PlayerController __instance)
         {
-            // Harmony access tools not allowed, used CoreLib's reflection util instead.
             var field = __instance.GetType()
                 .GetMembersChecked()
                 .FirstOrDefault(info => info.GetNameChecked().Equals("previousInventoryObjects"));

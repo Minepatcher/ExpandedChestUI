@@ -66,23 +66,20 @@ namespace ExpandedChestUI.Util
                     inventoryHandlerShared.inventoryLookup[inventoryTo]))
                 return;
             if (isToPlayerInventory) IsPlayerInventory = true;
-            bool buffer =
-                inventoryHandlerShared.lockedObjectsBufferLookup.TryGetBuffer(inventoryFrom, out var dynamicBuffer1);
+            bool buffer = inventoryHandlerShared.lockedObjectsBufferLookup.TryGetBuffer(inventoryFrom, out var dynamicBuffer1);
             var inventoryBuffer1 = inventoryHandlerShared.inventoryLookup[inventoryFrom];
             foreach (var bufferItem in inventoryBuffer1)
             {
                 int size = bufferItem.size;
                 var dynamicBuffer3 = inventoryHandlerShared.containedObjectsBufferLookup[inventoryFrom];
-                for (int startIndex = bufferItem.startIndex +
-                                      (bufferItem.startIndex == 0 && isFromPlayerInventory ? 10 : 0);
-                     startIndex < bufferItem.startIndex + size;
-                     ++startIndex)
+                for (int startIndex = bufferItem.startIndex + (bufferItem.startIndex == 0 && isFromPlayerInventory ? 10 : 0);
+                     startIndex < bufferItem.startIndex + size; ++startIndex)
                 {
                     if (buffer && dynamicBuffer1[startIndex].Value) continue;
                     var objectData = dynamicBuffer3[startIndex].objectData;
                     if (objectData.objectID != ObjectID.None)
-                        InventoryUtility.TryMoveAll(in inventoryHandlerShared, inventoryFrom, startIndex, inventoryTo,
-                            -1, -1, isQuickStacking: true);
+                        InventoryUtility.TryMove(in inventoryHandlerShared, inventoryFrom, startIndex, inventoryTo,
+                            -1, -1);
                 }
             }
             IsPlayerInventory = false;
