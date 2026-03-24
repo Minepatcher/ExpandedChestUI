@@ -12,6 +12,21 @@ Expanded Chest UI is a Core Keeper mod that expands the default Core Keeper Ches
 > **_Note:_** Store All and Take All both ignore the first row in your player inventory.
 > 
 > **_Note 2:_** Quick Stack, Replenish, Store All, and Take All ignore locked items.
+- Adds Shortcut Keys for keyboard and controller for faster chest inventory usage:
+  - **_Keyboard:_**
+    - **Sort:** [R] <b>\*</b>Hover over chest UI to sort the chest, hover over player inventory to sort player inventory.
+    - **Quick Sort:** [Q]
+    - **Split Stack:** [Shift + R]
+    - **Replenish:** [Shift + Q]
+    - **Put All:** [CTRL + R]
+    - **Take All:** [CTRL + Q]
+  - **_Controller:_**
+    - **Sort:** [RDpad] <b>\*</b>Select a chest element to sort chest, Select a player element to sort the player inventory.
+    - **Quick Sort:** [LDpad]
+    - **Split Stack:** [LT + RDpad]
+    - **Replenish:** [LT + LDpad]
+    - **Put All:** [RT + RDpad]
+    - **Take All:** [RT + LDpad]
 - Upgrades the default Chest Max Size to 16x9. This allows for chests with up to 144 slots with a scrollbar!
   (**_MODDERS ONLY_**)
 
