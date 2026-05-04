@@ -8,17 +8,19 @@ using UnityEngine;
 // ReSharper disable once CheckNamespace
 namespace ExpandedChestUI.Component
 {
-    public class ExpandedInventoryUI : ItemSlotsUIContainer, IScrollable
+    public class ExpandedInventoryUI : ChestInventoryUI, IScrollable
     {
-        [Header("Expanded Inventory UI")] 
-        public ButtonUIElement optionalSortButton;
-        public ButtonUIElement optionalQuickStackButton;
+        [Header("Expanded Inventory UI")]
         public ButtonUIElement optionalPutAllButton;
         public ButtonUIElement optionalSplitStackButton;
         public ButtonUIElement optionalToInventoryButton;
         public ButtonUIElement optionalTakeAllButton;
+        public SpriteRenderer backgroundSR2;
         public GameObject root;
         private GameObject Root => root;
+        private float _inputFieldWasSetTimer;
+        private bool _pendingProfanityCheck;
+        private string _signText;
 
         private int _previousInventorySize = -1;
 
@@ -38,6 +40,8 @@ namespace ExpandedChestUI.Component
             base.Awake();
         }
 
+        private static WorldLabel ActiveWorldLabel => !Player ? null : Player.activeWorldLabel;
+
         public override void ShowContainerUI()
         {
             Root.SetActive(true);
@@ -49,6 +53,12 @@ namespace ExpandedChestUI.Component
                 scrollWindow.ResetScroll();
             }
 
+            labelRoot.gameObject.SetActive(true);
+            if (ActiveWorldLabel is null) return;
+            int state = ActiveWorldLabel.GetState();
+            if (signStateToggle.stateIndex == state) return;
+            signStateToggle.SetState(state);
+            
             if (Manager.ui.currentSelectedUIElement is not ExpandedInventorySlotUI) return;
             var selectedSlot = (ExpandedInventorySlotUI)Manager.ui.currentSelectedUIElement;
             if (selectedSlot.visibleSlotIndex >= _amountOfActiveSlots)
@@ -68,6 +78,8 @@ namespace ExpandedChestUI.Component
         public override void HideContainerUI()
         {
             Root.SetActive(false);
+            _inputFieldWasSetTimer = 0.0f;
+            labelRoot.gameObject.SetActive(false);
             base.HideContainerUI();
         }
 
@@ -79,7 +91,14 @@ namespace ExpandedChestUI.Component
             MarkSlotsAsDirty();
         }
 
-        private void UpdateContainerSize()
+        protected override void LateUpdate()
+        {
+            base.LateUpdate();
+            if (ActiveWorldLabel is null) return;
+            UpdateNameText();
+        }
+
+        protected override void UpdateContainerSize()
         {
             if (Manager.main.player is null) return;
             var inventoryHandler = GetInventoryHandler();
@@ -117,22 +136,18 @@ namespace ExpandedChestUI.Component
 
             if (amountOfActiveSlots != _amountOfActiveSlots) MarkSlotsAsDirty();
             if (inventoryHandler.entityMonoBehaviour is null) return;
-            var buttonUIElements = gameObject.GetComponentsInChildren<ButtonUIElement>(true);
+            var buttonUIElements = gameObject.GetComponentsInChildren<ExpandedButtonUIElement>(true);
             bool hasScroll = height > scrollWindow.windowHeight;
+            scrollWindow.scrollBar.transform.localPosition = new Vector3(-sideStartPosition + 1.25f,
+                scrollWindow.scrollBar.transform.localPosition.y, scrollWindow.scrollBar.transform.localPosition.z);
+            float xPosition = scrollWindow.scrollBar.transform.localPosition.x;
             for (int index = 0; index < buttonUIElements.Length; index++)
             {
                 var buttonUIElement = buttonUIElements[index];
-                if (buttonUIElement.name == "Handle")
-                {
-                    buttonUIElement.transform.parent.parent.localPosition = new Vector3(
-                        -sideStartPosition + 1f,
-                        scrollWindow.scrollBar.transform.localPosition.y,
-                        scrollWindow.scrollBar.transform.localPosition.z);
-                }
-                else if (inventoryHandler.entityMonoBehaviour is Chest { showSortAndQuickStackButtons: true })
+                if (inventoryHandler.entityMonoBehaviour is Chest { showSortAndQuickStackButtons: true })
                 {
                     buttonUIElement.transform.localPosition = new Vector3(
-                        -sideStartPosition + (hasScroll ? 2f : spread) + Mathf.FloorToInt((index - 1) / 3f) * spread,
+                        -sideStartPosition + (hasScroll ? 2.25f : 1.75f) + Mathf.FloorToInt(index / 3f) * spread,
                         buttonUIElement.transform.localPosition.y,
                         buttonUIElement.transform.localPosition.z);
                     buttonUIElement.gameObject.SetActive(true);
@@ -152,6 +167,7 @@ namespace ExpandedChestUI.Component
             scrollWindow.windowWidth = vector2.x;
             if (backgroundSR is null) return;
             backgroundSR.transform.localScale = new Vector3(vector2.x, vector2.y, 1f);
+            backgroundSR2.size = new Vector2(vector2.x + 0.425f, vector2.y + 0.425f);
             itemSlotsRoot.transform.parent.parent.localPosition = new Vector3(0.0f, height / 2, 0.0f);
             itemSlotsRoot.transform.localPosition = new Vector3(0.0f, -(spread / 2), 0.0f);
         }
@@ -220,24 +236,26 @@ namespace ExpandedChestUI.Component
             }
         }
 
-        private float GetSideStartPosition(int size) => -((size - 1f) / 2f) * spread;
+        private new float GetSideStartPosition(int size) => -((size - 1f) / 2f) * spread;
 
-        public void UpdateContainingElements(float scroll) { }
+        public new void UpdateContainingElements(float scroll)
+        {
+        }
 
-        public bool IsBottomElementSelected()
+        public new bool IsBottomElementSelected()
         {
             var selected = Manager.ui.currentSelectedUIElement;
             return selected != null && itemSlots.FindAll(x => x.uiSlotYPosition == (visibleRows - 1))
                 .Exists(x => x == selected);
         }
 
-        public bool IsTopElementSelected()
+        public new bool IsTopElementSelected()
         {
             var selected = Manager.ui.currentSelectedUIElement;
             return selected != null && itemSlots.FindAll(x => x.uiSlotYPosition == 0).Exists(x => x == selected);
         }
 
-        public float GetCurrentWindowHeight() => Mathf.Max(0f, visibleRows * spread);
+        public new float GetCurrentWindowHeight() => Mathf.Max(0f, visibleRows * spread);
 
         public new void QuickStack()
         {
@@ -258,7 +276,8 @@ namespace ExpandedChestUI.Component
             var inventoryHandler = GetInventoryHandler();
             if (inventoryHandler is null || Player is null) return;
             var playerInventoryEntity = Player.playerInventoryHandler.inventoryEntity;
-            ExpandedChestActionsClient.MoveAllInventoryItems(playerInventoryEntity, inventoryHandler.inventoryEntity, true);
+            ExpandedChestActionsClient.MoveAllInventoryItems(playerInventoryEntity, inventoryHandler.inventoryEntity,
+                true);
             AudioManager.Sfx(SfxTableID.inventorySFXSort, transform.position);
         }
 
@@ -267,7 +286,8 @@ namespace ExpandedChestUI.Component
             var inventoryHandler = GetInventoryHandler();
             if (inventoryHandler is null || Player is null) return;
             var playerInventoryEntity = Player.playerInventoryHandler.inventoryEntity;
-            ExpandedChestActionsClient.MoveAllInventoryItems(inventoryHandler.inventoryEntity, playerInventoryEntity, isToPlayerInventory: true);
+            ExpandedChestActionsClient.MoveAllInventoryItems(inventoryHandler.inventoryEntity, playerInventoryEntity,
+                isToPlayerInventory: true);
             AudioManager.Sfx(SfxTableID.inventorySFXSort, transform.position);
         }
 
@@ -277,6 +297,64 @@ namespace ExpandedChestUI.Component
             if (inventoryHandler is null || Player is null) return;
             ExpandedChestActionsClient.SplitInventoryStacks(inventoryHandler.inventoryEntity);
             AudioManager.Sfx(SfxTableID.inventorySFXSort, transform.position);
+        }
+
+        public new void SetName()
+        {
+            if (Player == null || Player.activeWorldLabel == null) return;
+            _pendingProfanityCheck = true;
+            var activeChest = Player.activeWorldLabel;
+            string newDescription = _signText = inputField.pugText.GetText();
+            Manager.platform.parentalControlManager.RestrictInput(newDescription, filteredName =>
+            {
+                if (newDescription != _signText || activeChest == null) return;
+                Player.playerCommandSystem.SetDescription(activeChest.entity, filteredName);
+                _inputFieldWasSetTimer = 1f;
+                _pendingProfanityCheck = false;
+            });
+        }
+
+        public new void SetVisibilityState()
+        {
+            var player = Manager.main.player;
+            if (player == null || player.activeWorldLabel == null) return;
+            player.playerCommandSystem.SetWorldLabelVisibility(player.activeWorldLabel.entity, signStateToggle.stateIndex);
+        }
+
+        private void UpdateNameText(bool force = false)
+        {
+            var activeWorldLabel = ActiveWorldLabel;
+            if (!isShowing || activeWorldLabel == null || _pendingProfanityCheck)
+                return;
+            if (_inputFieldWasSetTimer > 0.0)
+            {
+                _inputFieldWasSetTimer -= Time.deltaTime;
+            }
+            else
+            {
+                if (inputField.inputIsActive)
+                    return;
+                string newChestText = activeWorldLabel.GetName();
+                if (string.IsNullOrEmpty(_signText) && !string.IsNullOrEmpty(inputField.pugText.GetText()))
+                {
+                    inputField.SetInputText("");
+                }
+                else
+                {
+                    if (_signText == newChestText && !force)
+                        return;
+                    _signText = newChestText;
+                    inputField.SetInputText("...");
+                    _pendingProfanityCheck = true;
+                    Manager.platform.parentalControlManager.RestrictInput(newChestText, filteredName =>
+                    {
+                        if (newChestText != _signText || ActiveWorldLabel == null)
+                            return;
+                        inputField.SetInputText(filteredName ?? "");
+                        _pendingProfanityCheck = false;
+                    });
+                }
+            }
         }
     }
 }

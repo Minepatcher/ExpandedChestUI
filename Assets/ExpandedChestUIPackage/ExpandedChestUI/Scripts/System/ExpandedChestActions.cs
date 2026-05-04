@@ -85,7 +85,6 @@ namespace ExpandedChestUI.Scripts.System
             var shared = _inventoryHandlerShared;
             Entities.WithAll<ExpandedChestActionRpc>().ForEach((Entity e, in ExpandedChestActionRpc rpc) =>
             {
-                
                 if (rpc.Inventory1 == Entity.Null)
                 {
                     Debug.LogError("Got null inventory, are you sure it has a GhostComponent?");

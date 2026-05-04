@@ -7,7 +7,7 @@ namespace ExpandedChestUI
 {
     public class ExpandedChestUIMod : IMod
     {
-        public const string Version = "1.1.1";
+        public const string Version = "1.2.0";
         public const string ModID = "ExpandedChestUIMod";
         public const string FriendlyName = "Expanded ChestUI Mod";
         internal static readonly Logger Log = new(FriendlyName);

@@ -1,3 +1,8 @@
+### v1.2.0
+- Updated for CK 1.2.1
+- Added the Label and Label Options to Chest
+- Updated UI to look more like the Default CK Chest UI
+
 ### v1.1.1
 - Allow static usage of ExpandedChestActionsClient for better performance/usage.
 - Fixed issue where items would not go to the player's inventory.
