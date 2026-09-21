@@ -140,7 +140,6 @@ namespace ExpandedChestUI.Component
             bool hasScroll = height > scrollWindow.windowHeight;
             scrollWindow.scrollBar.transform.localPosition = new Vector3(-sideStartPosition + 1.25f,
                 scrollWindow.scrollBar.transform.localPosition.y, scrollWindow.scrollBar.transform.localPosition.z);
-            float xPosition = scrollWindow.scrollBar.transform.localPosition.x;
             for (int index = 0; index < buttonUIElements.Length; index++)
             {
                 var buttonUIElement = buttonUIElements[index];
