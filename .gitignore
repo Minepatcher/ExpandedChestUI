@@ -91,3 +91,4 @@ crashlytics-build.properties
 /[Aa]ssets/UniversalRenderPipelineGlobalSettings.asset*
 /[Aa]ssets/Examples.zip*
 /[Aa]ssets/DefaultVolumeProfile.asset*
+/PugModUploader*
